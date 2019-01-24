@@ -1,1 +1,1 @@
-include ':app', ':characterlib'
+include ':app', ':characterlib', ':serielib'

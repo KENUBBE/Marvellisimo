@@ -6,8 +6,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:showIn="@layout/activity_character"
-        tools:context=".Character">
+        tools:showIn="@layout/activity_serie"
+        tools:context=".Serie">
 
     <TextView
 
@@ -15,5 +15,6 @@
 
             android:layout_height="match_parent"
 
-            android:text="Hello Characters!"/>
+            android:text="Hello Series!"/>
+
 </android.support.constraint.ConstraintLayout>

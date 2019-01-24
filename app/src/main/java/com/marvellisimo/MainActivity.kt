@@ -1,5 +1,6 @@
 package com.marvellisimo
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
@@ -8,6 +9,8 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.example.characterlib.Character
+import com.example.serielib.Serie
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -59,22 +62,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         when (item.itemId) {
-            R.id.nav_camera -> {
+            R.id.nav_characters -> {
                 // Handle the camera action
+                startActivity(Intent(this, Character::class.java))
             }
-            R.id.nav_gallery -> {
-
+            R.id.nav_series -> {
+                startActivity(Intent(this, Serie::class.java))
             }
             R.id.nav_slideshow -> {
 
             }
             R.id.nav_manage -> {
-
-            }
-            R.id.nav_share -> {
-
-            }
-            R.id.nav_send -> {
 
             }
         }
