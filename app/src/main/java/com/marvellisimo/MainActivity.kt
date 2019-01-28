@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_series -> {
                 startActivity(Intent(this, Serie::class.java))
+                
             }
             R.id.nav_slideshow -> {
 
