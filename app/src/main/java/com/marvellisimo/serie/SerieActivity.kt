@@ -1,9 +1,10 @@
-package com.marvellisimo
+package com.marvellisimo.serie
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.marvellisimo.R
 
-class Serie : AppCompatActivity() {
+class SerieActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
