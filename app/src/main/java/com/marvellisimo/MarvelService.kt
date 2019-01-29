@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface MarvelService {
     @GET("todos")
-    fun getData(): Observable<List<Todos>>
+    fun getData(): Single<List<Todos>>
 }

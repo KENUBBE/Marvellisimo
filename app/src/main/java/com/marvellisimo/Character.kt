@@ -41,7 +41,7 @@ class Character : AppCompatActivity() {
     fun addToDb(view: View) {
         // Create a new user with a first and last name
         val data = HashMap<String, Any>()
-        data["name"] = "Spiderman"
+        data["name"] = "Spindelfittan"
 
         db.collection("Series")
             .add(data)
@@ -54,7 +54,6 @@ class Character : AppCompatActivity() {
     }
 
 
-
     private fun getMarvelService(): MarvelService {
         return Retrofit.Builder()
             .baseUrl("https://jsonplaceholder.typicode.com/")
@@ -65,13 +64,14 @@ class Character : AppCompatActivity() {
             .create(MarvelService::class.java)
     }
 
-    fun getUserInfo(view: View) {
-        getMarvelService()
+    fun getUserInfo(view: View): Disposable {
+        return getMarvelService()
             .getData()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({res -> println("RESULT $res")},
-                { error -> println("Error: ${error.message}")}).dispose()
+            .subscribeOn(Schedulers.single())
+            .subscribe(
+                { res -> println("RESULT $res") },
+                { error -> println("Error: ${error.message}") }
+            )
     }
 
     private fun getOkHttpClient(): OkHttpClient {
