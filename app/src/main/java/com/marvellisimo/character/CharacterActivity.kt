@@ -1,5 +1,6 @@
 package com.marvellisimo.character
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
@@ -61,12 +62,16 @@ class CharacterActivity : AppCompatActivity() {
     }
 
     private fun renderCharacter(characters: ArrayList<Character>) {
-        val gridview: GridView = findViewById(R.id.gridview)
-        gridview.adapter = ImageAdapter(this, characters)
+        val gridView: GridView = findViewById(R.id.gridview)
+        gridView.adapter = ImageAdapter(this, characters)
 
-        gridview.onItemClickListener =
+        gridView.onItemClickListener =
                 AdapterView.OnItemClickListener { parent, v, position, id ->
-                    Toast.makeText(this, "$position", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, InfoActivity::class.java)
+                    intent.putExtra("name", characters[position].name)
+                    intent.putExtra("desc", characters[position].description)
+                    intent.putExtra("thumbnail", characters[position].thumbnail.createUrl())
+                    startActivity(intent)
                 }
     }
 
