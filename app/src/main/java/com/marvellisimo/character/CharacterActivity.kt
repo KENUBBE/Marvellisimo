@@ -2,21 +2,17 @@ package com.marvellisimo.character
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.marvellisimo.repository.CharInterface
 import com.marvellisimo.service.MarvelService
 import com.marvellisimo.R
 import com.marvellisimo.dto.Character
-import com.squareup.picasso.Picasso
+import com.marvellisimo.service.ImageAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_character.*
 import okhttp3.OkHttpClient
-import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -60,18 +56,18 @@ class CharacterActivity : AppCompatActivity() {
     private fun createCharacter(character: ArrayList<Character>) {
         for (char in character) {
             characters.add(char)
-            renderCharacter(char)
         }
+        renderCharacter(characters)
     }
 
-    private fun renderCharacter(character: Character) {
-        val tvChar = ImageView(this)
-        charConstraint.addView(tvChar)
-        Picasso.get()
-            .load(character.thumbnail.createUrl())
-            .resize(500,500)
-            .centerCrop()
-            .into(tvChar)
+    private fun renderCharacter(characters: ArrayList<Character>) {
+        val gridview: GridView = findViewById(R.id.gridview)
+        gridview.adapter = ImageAdapter(this, characters)
+
+        gridview.onItemClickListener =
+                AdapterView.OnItemClickListener { parent, v, position, id ->
+                    Toast.makeText(this, "$position", Toast.LENGTH_SHORT).show()
+                }
     }
 
     private fun getOkHttpClient(): OkHttpClient {
