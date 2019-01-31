@@ -5,11 +5,11 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
 import com.google.firebase.firestore.FirebaseFirestore
-import com.marvellisimo.repository.CharInterface
+import com.marvellisimo.repository.Data
 import com.marvellisimo.service.MarvelService
 import com.marvellisimo.R
-import com.marvellisimo.dto.Character
-import com.marvellisimo.service.ImageAdapter
+import com.marvellisimo.dto.character.Character
+import com.marvellisimo.service.CharacterImageAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -30,17 +30,16 @@ class CharacterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         fetchCharacter()
         setContentView(R.layout.activity_character)
-
     }
 
-    private fun createMarvelService(): CharInterface {
+    private fun createMarvelService(): Data {
         return Retrofit.Builder()
             .baseUrl(baseURL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(getOkHttpClient())
             .build()
-            .create(CharInterface::class.java)
+            .create(Data::class.java)
     }
 
     private fun fetchCharacter(): Disposable {
@@ -62,8 +61,8 @@ class CharacterActivity : AppCompatActivity() {
     }
 
     private fun renderCharacter(characters: ArrayList<Character>) {
-        val gridView: GridView = findViewById(R.id.gridview)
-        gridView.adapter = ImageAdapter(this, characters)
+        val gridView: GridView = findViewById(R.id.char_gridview)
+        gridView.adapter = CharacterImageAdapter(this, characters)
 
         gridView.onItemClickListener =
                 AdapterView.OnItemClickListener { parent, v, position, id ->

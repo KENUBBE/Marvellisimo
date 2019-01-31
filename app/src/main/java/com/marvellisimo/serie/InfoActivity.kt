@@ -1,7 +1,7 @@
-package com.marvellisimo.character
+package com.marvellisimo.serie
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.marvellisimo.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_info.*
@@ -13,12 +13,12 @@ class InfoActivity : AppCompatActivity() {
         setContentView(R.layout.activity_info)
 
         val bundle: Bundle = intent.extras!!
-        val name = bundle.getString("name")
+        val title = bundle.getString("title")
         val desc = bundle.getString("desc")
         val thumbnail = bundle.getString("thumbnail")
 
-        infoName.text = name
-        if (desc != "") infoDesc.text = desc else infoDesc.text = getString(R.string.no_char_description)
+        infoName.text = title
+        if (desc != null) infoDesc.text = desc else infoDesc.text = getString(R.string.no_serie_description)
 
         Picasso.get().load(thumbnail).fit().centerCrop().into(infoThumbnail)
     }

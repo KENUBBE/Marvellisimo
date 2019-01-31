@@ -9,5 +9,6 @@
     <string name="title_activity_bajs">Bajs</string>
     <string name="character">CHARACTER</string>
     <string name="series">SERIES</string>
-    <string name="info_description">No description found for this character</string>
+    <string name="no_char_description">No description found for this character</string>
+    <string name="no_serie_description">No description found for this serie</string>
 </resources>

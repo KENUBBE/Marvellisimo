@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
-import com.marvellisimo.dto.Character
+import com.marvellisimo.dto.character.Character
 import com.squareup.picasso.Picasso
 
-class ImageAdapter(private val mContext: Context, private val characters: ArrayList<Character>) : BaseAdapter() {
+class CharacterImageAdapter(private val mContext: Context, private val characters: ArrayList<Character>) : BaseAdapter() {
 
     override fun getCount(): Int = characters.size
 
