@@ -12,6 +12,8 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
+        <activity android:name=".serie.InfoActivity">
+        </activity>
         <activity android:name=".character.InfoActivity">
         </activity>
         <activity android:name=".serie.SerieActivity">

@@ -1,4 +1,4 @@
-package com.marvellisimo.dto
+package com.marvellisimo.dto.character
 
 data class Data(val results: ArrayList<Character>) {
 }

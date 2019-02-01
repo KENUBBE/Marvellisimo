@@ -7,10 +7,15 @@
         android:layout_height="match_parent"
         tools:context=".serie.SerieActivity">
 
-    <TextView
-            android:text="@string/series"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/textView3"/>
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/serie_gridview"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:columnWidth="100dp"
+              android:numColumns="2"
+              android:verticalSpacing="5dp"
+              android:horizontalSpacing="-10dp"
+              android:stretchMode="columnWidth"
+              android:gravity="center"
+    />
 </android.support.constraint.ConstraintLayout>
