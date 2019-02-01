@@ -3,6 +3,8 @@ package com.marvellisimo.character
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.View
 import android.widget.*
@@ -37,22 +39,43 @@ class CharacterActivity : AppCompatActivity() {
         fetchCharacter()
         setContentView(R.layout.activity_character)
 
-        searchField.setOnKeyListener(View.OnKeyListener { v, keyCode, event ->
-            if (keyCode == KeyEvent.ACTION_DOWN && event.action == KeyEvent.ACTION_DOWN && searchField.text.toString().length > 2) {
-                isSearchFieldEmpty()
-                return@OnKeyListener true
+
+        val sf: EditText = findViewById(R.id.searchField)
+
+
+
+
+        var text: TextWatcher? = null
+
+
+        text = object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+
             }
-            false
-        })
+
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                isSearchFieldEmpty()
+            }
+
+            override fun afterTextChanged(editable: Editable) {
+
+            }
+        }
+
+        sf.addTextChangedListener(text)
+
+
     }
 
 
+
     private fun isSearchFieldEmpty() {
-        val textField = searchField.text.toString().isEmpty()
-        if (textField) {
+        val tf = searchField.text.toString()
+        if (tf.isBlank() || tf.length <= 1) {
             renderCharacter(characters)
+        } else {
+            fetchCharacterByStartsWith()
         }
-        fetchCharacterByStartsWith()
     }
 
     private fun createMarvelService(): Data {
