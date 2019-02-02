@@ -12,7 +12,7 @@
             android:id="@+id/series_searchField"
             android:layout_width="300dp"
             android:layout_height="45dp"
-            android:hint="@string/search_for_character"
+            android:hint="@string/search_for_serie"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
