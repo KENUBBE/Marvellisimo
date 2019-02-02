@@ -38,39 +38,26 @@ class CharacterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         fetchCharacter()
         setContentView(R.layout.activity_character)
+        addTextWatcherOnSearchField()
+    }
 
-
-        val sf: EditText = findViewById(R.id.searchField)
-
-
-
-
+    private fun addTextWatcherOnSearchField() {
+        val sf: EditText = findViewById(R.id.character_searchField)
         var text: TextWatcher? = null
 
-
         text = object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-
-            }
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
 
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
                 isSearchFieldEmpty()
             }
-
-            override fun afterTextChanged(editable: Editable) {
-
-            }
+            override fun afterTextChanged(editable: Editable) {}
         }
-
         sf.addTextChangedListener(text)
-
-
     }
 
-
-
     private fun isSearchFieldEmpty() {
-        val tf = searchField.text.toString()
+        val tf = character_searchField.text.toString()
         if (tf.isBlank() || tf.length <= 1) {
             renderCharacter(characters)
         } else {
@@ -99,10 +86,10 @@ class CharacterActivity : AppCompatActivity() {
             )
     }
 
-    protected fun fetchCharacterByStartsWith(): Disposable {
-        println(prefixApi + searchField.text.toString() + suffixApi + hashKEY)
+    private fun fetchCharacterByStartsWith(): Disposable {
+        println(prefixApi + character_searchField.text.toString() + suffixApi + hashKEY)
         return createMarvelService()
-            .getCharacterByStartWith(prefixApi + searchField.text.toString() + suffixApi + hashKEY)
+            .getCharacterByStartWith(prefixApi + character_searchField.text.toString() + suffixApi + hashKEY)
             .subscribeOn(Schedulers.single())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
