@@ -11,4 +11,6 @@
     <string name="series">SERIES</string>
     <string name="no_char_description">No description found for this character</string>
     <string name="no_serie_description">No description found for this serie</string>
+    <string name="search_for_character">Search for character</string>
+    <string name="search_for_a_character">Search for a character</string>
 </resources>
