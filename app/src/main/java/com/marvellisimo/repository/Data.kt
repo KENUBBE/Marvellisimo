@@ -18,4 +18,7 @@ interface Data {
     @GET
     fun getCharacterByStartWith(@Url url: String): Single<Response>
 
+    @GET
+    fun getSerieByStartWith(@Url url: String): Single<com.marvellisimo.dto.series.Response>
+
 }

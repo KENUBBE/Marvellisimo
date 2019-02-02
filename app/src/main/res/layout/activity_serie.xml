@@ -7,6 +7,23 @@
         android:layout_height="match_parent"
         tools:context=".serie.SerieActivity">
 
+    <EditText
+            android:inputType="text"
+            android:id="@+id/series_searchField"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:hint="@string/search_for_serie"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintVertical_bias="0.011"
+            android:textAlignment="center"/>
+
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/serie_gridview"
               android:layout_width="match_parent"
@@ -17,5 +34,7 @@
               android:horizontalSpacing="-10dp"
               android:stretchMode="columnWidth"
               android:gravity="center"
+              app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="80dp"
+              app:layout_constraintTop_toTopOf="@+id/series_searchField"
     />
 </android.support.constraint.ConstraintLayout>

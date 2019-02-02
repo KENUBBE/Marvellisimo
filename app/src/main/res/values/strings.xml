@@ -6,11 +6,10 @@
     <string name="nav_header_subtitle">Tobias Ask, John Gherga</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_bajs">Bajs</string>
     <string name="character">CHARACTER</string>
     <string name="series">SERIES</string>
     <string name="no_char_description">No description found for this character</string>
     <string name="no_serie_description">No description found for this serie</string>
-    <string name="search_for_character">Search for character</string>
-    <string name="search_for_a_character">Search for a character</string>
+    <string name="search_for_character">Search for characters</string>
+    <string name="search_for_serie">Search for series</string>
 </resources>
