@@ -3,6 +3,7 @@ package com.marvellisimo.serie
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.AdapterView
@@ -16,7 +17,6 @@ import com.marvellisimo.service.SerieImageAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_serie.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -41,26 +41,28 @@ class SerieActivity : AppCompatActivity() {
 
     private fun addTextWatcherOnSearchField() {
         val sf: EditText = findViewById(R.id.series_searchField)
-        var text: TextWatcher? = null
+        val text: TextWatcher?
 
         text = object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
 
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                isSearchFieldEmpty()
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+
+            override fun afterTextChanged(editable: Editable) {
+                isSearchFieldEmpty(editable)
             }
-            override fun afterTextChanged(editable: Editable) {}
         }
         sf.addTextChangedListener(text)
     }
 
-    private fun isSearchFieldEmpty() {
-        val tf = series_searchField.text.toString()
-        if (tf.isBlank() || tf.length <= 1) {
-            renderSerie(series)
-        } else {
-            fetchSerieByStartsWith()
-        }
+    private fun isSearchFieldEmpty(userInput: Editable) {
+        Handler().postDelayed({
+            if (userInput.length < 3) {
+                renderSerie(series)
+            } else {
+                fetchSerieByStartsWith(userInput)
+            }
+        }, 700)
     }
 
     private fun createMarvelService(): Data {
@@ -84,10 +86,9 @@ class SerieActivity : AppCompatActivity() {
             )
     }
 
-    private fun fetchSerieByStartsWith(): Disposable {
-        println(prefixApi + series_searchField.text.toString() + suffixApi + hashKEY)
+    private fun fetchSerieByStartsWith(userInput: Editable): Disposable {
         return createMarvelService()
-            .getSerieByStartWith(prefixApi + series_searchField.text.toString() + suffixApi + hashKEY)
+            .getSerieByStartWith(prefixApi + userInput + suffixApi + hashKEY)
             .subscribeOn(Schedulers.single())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(

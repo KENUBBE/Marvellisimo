@@ -8,7 +8,7 @@
         tools:context=".serie.SerieActivity">
 
     <EditText
-            android:inputType="text"
+            android:inputType="textNoSuggestions"
             android:id="@+id/series_searchField"
             android:layout_width="300dp"
             android:layout_height="45dp"
