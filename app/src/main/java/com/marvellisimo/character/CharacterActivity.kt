@@ -3,6 +3,7 @@ package com.marvellisimo.character
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.KeyEvent
@@ -22,6 +23,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import android.text.InputType
 
 
 class CharacterActivity : AppCompatActivity() {
@@ -43,26 +45,28 @@ class CharacterActivity : AppCompatActivity() {
 
     private fun addTextWatcherOnSearchField() {
         val sf: EditText = findViewById(R.id.character_searchField)
-        var text: TextWatcher? = null
+        val text: TextWatcher?
 
         text = object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
 
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                isSearchFieldEmpty()
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+
+            override fun afterTextChanged(editable: Editable) {
+                isSearchFieldEmpty(editable)
             }
-            override fun afterTextChanged(editable: Editable) {}
         }
         sf.addTextChangedListener(text)
     }
 
-    private fun isSearchFieldEmpty() {
-        val tf = character_searchField.text.toString()
-        if (tf.isBlank() || tf.length <= 1) {
-            renderCharacter(characters)
-        } else {
-            fetchCharacterByStartsWith()
-        }
+    private fun isSearchFieldEmpty(userInput: Editable) {
+        Handler().postDelayed({
+            if (userInput.length < 3) {
+                renderCharacter(characters)
+            } else {
+                fetchCharacterByStartsWith(userInput)
+            }
+        }, 700)
     }
 
     private fun createMarvelService(): Data {
@@ -86,20 +90,18 @@ class CharacterActivity : AppCompatActivity() {
             )
     }
 
-    private fun fetchCharacterByStartsWith(): Disposable {
-        println(prefixApi + character_searchField.text.toString() + suffixApi + hashKEY)
+    private fun fetchCharacterByStartsWith(userInput: Editable): Disposable {
         return createMarvelService()
-            .getCharacterByStartWith(prefixApi + character_searchField.text.toString() + suffixApi + hashKEY)
-            .subscribeOn(Schedulers.single())
+            .getCharacterByStartWith(prefixApi + userInput + suffixApi + hashKEY)
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { res -> createSearchResult(res.data.results) },
+                { res -> println(res.data.results); searchResults.clear(); createSearchResult(res.data.results) },
                 { error -> println("Error: ${error.message}") }
             )
     }
 
     private fun createSearchResult(result: ArrayList<Character>) {
-        searchResults.clear()
         for (res in result) {
             searchResults.add(res)
         }

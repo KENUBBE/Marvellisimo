@@ -16,22 +16,35 @@
             app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp" app:layout_constraintVertical_bias="0.143" android:layout_marginTop="8dp"/>
+
     <TextView
             android:text="TextView"
             android:layout_width="127dp"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" android:id="@+id/infoName" android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" android:layout_marginTop="86dp"
-            app:layout_constraintTop_toBottomOf="@+id/infoThumbnail" app:layout_constraintVertical_bias="0.0"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/infoName"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="86dp"
+            app:layout_constraintTop_toBottomOf="@+id/infoThumbnail"
+            app:layout_constraintVertical_bias="0.0"
+            android:textAlignment="center"/>
+
     <TextView
             android:text="No description found for this @string/character"
             android:layout_width="304dp"
             android:layout_height="133dp"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/infoDesc" app:layout_constraintHorizontal_bias="0.495" android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp" android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/infoName" android:layout_marginBottom="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/infoDesc"
+            app:layout_constraintHorizontal_bias="0.495"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/infoName"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-    />
+            android:textAlignment="center"/>
 </android.support.constraint.ConstraintLayout>
