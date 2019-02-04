@@ -118,10 +118,13 @@ class SerieActivity : AppCompatActivity() {
 
         gridView.onItemClickListener =
                 AdapterView.OnItemClickListener { parent, v, position, id ->
-                    val intent = Intent(this, InfoActivity::class.java)
-                    intent.putExtra("title", series[position].title)
+                    val intent = Intent(this, InfoActivity::class.java).apply {
+                        action = Intent.ACTION_SEND
+                        putExtra("serie", series[position])
+                    }
+                    /*intent.putExtra("title", series[position].title)
                     intent.putExtra("desc", series[position].description)
-                    intent.putExtra("thumbnail", series[position].thumbnail.createUrl())
+                    intent.putExtra("thumbnail", series[position].thumbnail.createUrl())*/
                     startActivity(intent)
                 }
     }
