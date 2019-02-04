@@ -121,10 +121,14 @@ class CharacterActivity : AppCompatActivity() {
 
         gridView.onItemClickListener =
             AdapterView.OnItemClickListener { parent, v, position, id ->
-                val intent = Intent(this, InfoActivity::class.java)
-                intent.putExtra("name", characters[position].name)
-                intent.putExtra("desc", characters[position].description)
-                intent.putExtra("thumbnail", characters[position].thumbnail.createUrl())
+                val intent = Intent(this, InfoActivity::class.java).apply {
+                    action = Intent.ACTION_SEND
+                    putExtra("char", characters[position])
+                }
+
+                //intent.putExtra("name", characters[position].name)
+                //intent.putExtra("desc", characters[position].description)
+                //intent.putExtra("thumbnail", characters[position].thumbnail.createUrl())
                 startActivity(intent)
             }
     }
