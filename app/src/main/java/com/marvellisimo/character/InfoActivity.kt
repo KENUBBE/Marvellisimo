@@ -67,6 +67,7 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
                     }
                     startActivity(intent)
                 }, 1000)
+            }
     }
 
 
