@@ -28,6 +28,7 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
     lateinit var character: Character
     lateinit var db: FirebaseFirestore
     lateinit var serie: Serie
+    lateinit var fav: CheckBox
 
     private val baseURL: String = "http://gateway.marvel.com/v1/public/series/"
     private val apiKEY: String = "?&ts=1&apikey=ca119f99531365ccb328f771ec231aa2&hash="
@@ -38,8 +39,7 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
         setContentView(R.layout.activity_char_info)
         db = FirebaseFirestore.getInstance()
         character = intent.getParcelableExtra("char")
-        val fav: CheckBox = findViewById(R.id.fav_char)
-
+        fav = findViewById(R.id.fav_char)
         fav.setOnCheckedChangeListener(this)
 
         infoName.text = character.name
@@ -47,6 +47,7 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
             getString(R.string.no_char_description)
 
         Picasso.get().load(character.thumbnail.createUrl()).fit().centerCrop().into(infoThumbnail)
+        isCharacterInDB()
         renderSerie()
     }
 
@@ -66,7 +67,38 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
                     }
                     startActivity(intent)
                 }, 1000)
+    }
 
+
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        if(isChecked) {
+            isCharacterInDB()
+        } else {
+            deleteCharacterFromFavorite()
+        }
+    }
+
+    private fun addCharacterToFavorite() {
+            db.collection("favoriteCharacters").document(character.id.toString())
+                .set(character)
+            Toast.makeText(this, "Added to favorites", Toast.LENGTH_LONG).show()
+    }
+
+    private fun deleteCharacterFromFavorite() {
+        db.collection("favoriteCharacters").document(character.id.toString())
+            .delete()
+        Toast.makeText(this, "Deleted from favorites", Toast.LENGTH_LONG).show()
+    }
+
+    private fun isCharacterInDB() {
+        db.collection("favoriteCharacters").document(character.id.toString())
+            .get()
+            .addOnSuccessListener { result ->
+                if (result.exists()) {
+                    fav.isChecked = true
+                } else if (!result.exists() && fav.isChecked){
+                    addCharacterToFavorite()
+                }
             }
     }
 
@@ -103,23 +135,5 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
     private fun getOkHttpClient(): OkHttpClient {
         val builder = OkHttpClient.Builder()
         return builder.build()
-    }
-
-
-    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        if (isChecked) {
-
-            // Add a new document with a generated ID
-            /*db.collection("favoriteCharacters")
-                .add(character)
-                .addOnSuccessListener { documentReference ->
-                    Log.d("favoriteCharacters", "DocumentSnapshot added with ID: " + documentReference.id)
-                }
-                .addOnFailureListener { e ->
-                    Log.w("favoriteCharacters", "Error adding document", e)
-                }*/
-        } else {
-            println("Not added")
-        }
     }
 }
