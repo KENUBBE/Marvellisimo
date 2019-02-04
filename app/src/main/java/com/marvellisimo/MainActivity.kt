@@ -9,7 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import com.marvellisimo.Favorite.Favorite
+import com.marvellisimo.favorite.FavoriteActivity
 import com.marvellisimo.character.CharacterActivity
 import com.marvellisimo.serie.SerieActivity
 import com.marvellisimo.service.MarvelService
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent(this, SerieActivity::class.java))
             }
             R.id.nav_fav -> {
-                startActivity(Intent(this, Favorite::class.java))
+                startActivity(Intent(this, FavoriteActivity::class.java))
             }
             R.id.nav_slideshow -> {
 

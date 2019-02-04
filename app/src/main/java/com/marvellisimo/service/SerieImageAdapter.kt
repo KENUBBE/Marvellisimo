@@ -31,7 +31,6 @@ class SerieImageAdapter(private val mContext: Context, private val series: Array
 
         Picasso.get().load(series[position].thumbnail.createUrl()).fit().centerCrop().into(imageView)
         return imageView
-
     }
 
 

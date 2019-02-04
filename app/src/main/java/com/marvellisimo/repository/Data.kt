@@ -21,4 +21,7 @@ interface Data {
     @GET
     fun getSerieByStartWith(@Url url: String): Single<com.marvellisimo.dto.series.Response>
 
+    @GET
+    fun getSerieById(@Url url: String): Single<com.marvellisimo.dto.series.Response>
+
 }
