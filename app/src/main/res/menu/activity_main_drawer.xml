@@ -6,8 +6,9 @@
     <group android:checkableBehavior="single">
         <item
                 android:id="@+id/nav_characters"
-                android:icon="@drawable/ic_person_black_24dp"
+                android:icon="@drawable/ic_person_white_24dp"
                 android:title="Characters"/>
+
         <item
                 android:id="@+id/nav_series"
                 android:icon="@drawable/ic_local_movies_black_24dp"
