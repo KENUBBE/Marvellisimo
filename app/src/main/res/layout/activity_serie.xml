@@ -29,6 +29,7 @@
             app:backgroundTint="@color/defaultTextViewColor"
             android:visibility="visible"
             android:selectAllOnFocus="false"
+            android:textCursorDrawable="@color/textColorWhite"
             />
 
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
