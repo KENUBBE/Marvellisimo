@@ -9,10 +9,12 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import com.marvellisimo.favorite.FavoriteActivity
 import com.marvellisimo.character.CharacterActivity
 import com.marvellisimo.serie.SerieActivity
 import com.marvellisimo.service.MarvelService
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -25,10 +27,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
         marvelService.generateHashKey()
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+        val backgroundImageView: ImageView = findViewById(R.id.main_background)
+        Picasso.get().load(R.drawable.marvel_main_background).fit().into(backgroundImageView)
 
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar,

@@ -21,6 +21,7 @@
             android:layout_gravity="start"
             app:headerLayout="@layout/nav_header_main"
             app:menu="@menu/activity_main_drawer"
+            app:itemIconTint="#FFFFFF"
             app:itemTextColor="@color/textColorWhite"
             app:itemBackground="@color/common_google_signin_btn_text_dark_focused"
             />

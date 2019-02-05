@@ -24,7 +24,14 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintVertical_bias="0.011"
             android:inputType="textNoSuggestions"
-            android:textAlignment="center"/>
+            android:textAlignment="center"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default"
+            android:textColorLink="@color/defaultTextViewColor"
+            app:backgroundTint="@color/defaultTextViewColor"
+            android:visibility="visible"
+            android:selectAllOnFocus="false"
+            />
 
 
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -34,7 +41,8 @@
               android:columnWidth="100dp"
               android:numColumns="2"
               android:verticalSpacing="5dp"
-              android:horizontalSpacing="-10dp"
+              android:layout_marginStart="10dp"
+              android:horizontalSpacing="10dp"
               android:stretchMode="columnWidth"
               android:gravity="center"
               app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="80dp"

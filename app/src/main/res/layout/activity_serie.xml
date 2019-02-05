@@ -8,8 +8,7 @@
         tools:context=".serie.SerieActivity">
 
     <EditText
-            android:inputType="textNoSuggestions"
-            android:id="@+id/series_searchField"
+            android:id="@+id/character_searchField"
             android:layout_width="300dp"
             android:layout_height="45dp"
             android:hint="@string/search_for_serie"
@@ -22,7 +21,15 @@
             android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintVertical_bias="0.011"
-            android:textAlignment="center"/>
+            android:inputType="textNoSuggestions"
+            android:textAlignment="center"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:textColorHint="@color/common_google_signin_btn_text_dark_default"
+            android:textColorLink="@color/defaultTextViewColor"
+            app:backgroundTint="@color/defaultTextViewColor"
+            android:visibility="visible"
+            android:selectAllOnFocus="false"
+            />
 
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/serie_gridview"
