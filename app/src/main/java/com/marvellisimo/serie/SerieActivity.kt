@@ -9,6 +9,7 @@ import android.text.TextWatcher
 import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.GridView
+import android.widget.Toast
 import com.marvellisimo.R
 import com.marvellisimo.dto.series.Serie
 import com.marvellisimo.repository.Data
@@ -81,8 +82,8 @@ class SerieActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {res -> createSerie(res.data.results)},
-                {error -> println("Error: ${error.message}")}
+                { res -> createSerie(res.data.results) },
+                { error -> println("Error: ${error.message}") }
             )
     }
 
@@ -103,6 +104,7 @@ class SerieActivity : AppCompatActivity() {
             searchResults.add(res)
         }
         renderSerie(searchResults)
+        Toast.makeText(this, "Found ${searchResults.size} serie(s)", Toast.LENGTH_LONG).show()
     }
 
     private fun createSerie(serie: ArrayList<Serie>) {
@@ -117,16 +119,16 @@ class SerieActivity : AppCompatActivity() {
         gridView.adapter = SerieImageAdapter(this, series)
 
         gridView.onItemClickListener =
-                AdapterView.OnItemClickListener { parent, v, position, id ->
-                    val intent = Intent(this, InfoActivity::class.java).apply {
-                        action = Intent.ACTION_SEND
-                        putExtra("serie", series[position])
-                    }
-                    /*intent.putExtra("title", series[position].title)
-                    intent.putExtra("desc", series[position].description)
-                    intent.putExtra("thumbnail", series[position].thumbnail.createUrl())*/
-                    startActivity(intent)
+            AdapterView.OnItemClickListener { parent, v, position, id ->
+                val intent = Intent(this, InfoActivity::class.java).apply {
+                    action = Intent.ACTION_SEND
+                    putExtra("serie", series[position])
                 }
+                /*intent.putExtra("title", series[position].title)
+                intent.putExtra("desc", series[position].description)
+                intent.putExtra("thumbnail", series[position].thumbnail.createUrl())*/
+                startActivity(intent)
+            }
     }
 
     private fun getOkHttpClient(): OkHttpClient {
