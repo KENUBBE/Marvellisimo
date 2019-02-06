@@ -2,7 +2,6 @@ package com.marvellisimo
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -13,13 +12,13 @@ import android.widget.ImageView
 import com.marvellisimo.favorite.FavoriteActivity
 import com.marvellisimo.character.CharacterActivity
 import com.marvellisimo.serie.SerieActivity
-import com.marvellisimo.service.MarvelService
+import com.marvellisimo.service.HexBuilder
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    val marvelService = MarvelService()
+    val marvelService = HexBuilder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

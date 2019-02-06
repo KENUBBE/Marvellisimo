@@ -4,4 +4,4 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class SerieCharacter(val items: ArrayList<Item>) : Parcelable
+data class SerieCharacter(val items: ArrayList<Item> = arrayListOf(Item("", ""))) : Parcelable

@@ -5,4 +5,4 @@ import com.marvellisimo.dto.series.Item
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class CharacterSerie(val items: ArrayList<Item> = arrayListOf(Item("",""))): Parcelable
+data class CharacterSerie(val items: ArrayList<Item> = arrayListOf(Item("", ""))) : Parcelable

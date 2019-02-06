@@ -21,7 +21,7 @@ class ItemAdapter(private val mContext: Context, private val items: ArrayList<It
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             textView = TextView(mContext)
-            textView.setPadding(2,2,2,2)
+            textView.setPadding(2, 2, 2, 2)
         } else {
             textView = convertView as TextView
         }

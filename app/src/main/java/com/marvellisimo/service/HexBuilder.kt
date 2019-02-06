@@ -2,7 +2,7 @@ package com.marvellisimo.service
 
 import java.security.MessageDigest
 
-class MarvelService {
+class HexBuilder {
 
     fun generateHashKey(): String {
         var hexString = StringBuilder("")

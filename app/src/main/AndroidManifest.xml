@@ -19,9 +19,9 @@
         </activity>
         <activity android:name=".favorite.FavoriteActivity">
         </activity>
-        <activity android:name=".serie.InfoActivity">
+        <activity android:name=".serie.SerieInfoActivity">
         </activity>
-        <activity android:name=".character.InfoActivity">
+        <activity android:name=".character.CharInfoActivity">
         </activity>
         <activity android:name=".serie.SerieActivity">
         </activity>

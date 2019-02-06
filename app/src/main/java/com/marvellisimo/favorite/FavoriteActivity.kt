@@ -24,7 +24,7 @@ class FavoriteActivity : AppCompatActivity() {
         charImg = findViewById(R.id.fav_char_img)
         Picasso.get().load(R.drawable.marvel_characters).fit().centerCrop().into(charImg)
         charImg.setOnClickListener {
-            val intent = Intent(this,FavCharList::class.java)
+            val intent = Intent(this, FavCharList::class.java)
             startActivity(intent)
         }
     }
@@ -33,7 +33,7 @@ class FavoriteActivity : AppCompatActivity() {
         serieImg = findViewById(R.id.fav_series_img)
         Picasso.get().load(R.drawable.marvel_series).fit().centerCrop().into(serieImg)
         serieImg.setOnClickListener {
-            val intent = Intent(this,FavSerieList::class.java)
+            val intent = Intent(this, FavSerieList::class.java)
             startActivity(intent)
         }
     }

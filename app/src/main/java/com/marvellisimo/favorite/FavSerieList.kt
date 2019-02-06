@@ -1,6 +1,5 @@
 package com.marvellisimo.favorite
 
-import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -9,7 +8,7 @@ import android.widget.GridView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.marvellisimo.R
 import com.marvellisimo.dto.series.Serie
-import com.marvellisimo.serie.InfoActivity
+import com.marvellisimo.serie.SerieInfoActivity
 import com.marvellisimo.service.SerieImageAdapter
 
 class FavSerieList : AppCompatActivity() {
@@ -20,7 +19,6 @@ class FavSerieList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fav_serie_list)
-
     }
 
     override fun onResume() {
@@ -28,7 +26,6 @@ class FavSerieList : AppCompatActivity() {
         series.clear()
         loadFavoriteSerie()
     }
-
 
     private fun loadFavoriteSerie() {
         db.collection("favoriteSeries")
@@ -47,7 +44,7 @@ class FavSerieList : AppCompatActivity() {
         gridView.adapter = SerieImageAdapter(this, series)
         gridView.onItemClickListener =
             OnItemClickListener { parent, v, position, id ->
-                val intent = Intent(this, InfoActivity::class.java).apply {
+                val intent = Intent(this, SerieInfoActivity::class.java).apply {
                     action = Intent.ACTION_SEND
                     putExtra("serie", series[position])
                 }

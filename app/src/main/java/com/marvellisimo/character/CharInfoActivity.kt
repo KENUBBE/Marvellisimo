@@ -9,10 +9,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.marvellisimo.R
 import com.marvellisimo.dto.character.Character
 import com.marvellisimo.dto.series.Serie
-import com.marvellisimo.repository.Data
-import com.marvellisimo.serie.InfoActivity
+import com.marvellisimo.repository.MarvelService
+import com.marvellisimo.serie.SerieInfoActivity
+import com.marvellisimo.service.HexBuilder
 import com.marvellisimo.service.ItemAdapter
-import com.marvellisimo.service.MarvelService
 import com.squareup.picasso.Picasso
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -23,7 +23,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
+class CharInfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener {
 
     lateinit var character: Character
     lateinit var db: FirebaseFirestore
@@ -32,7 +32,7 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
 
     private val baseURL: String = "http://gateway.marvel.com/v1/public/series/"
     private val apiKEY: String = "?&ts=1&apikey=ca119f99531365ccb328f771ec231aa2&hash="
-    private val hashKEY = MarvelService().generateHashKey()
+    private val hashKEY = HexBuilder().generateHashKey()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +64,7 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
                 val serieId = character.series.items[position].resourceURI
                 fetchSerieInfo(serieId)
                 Handler().postDelayed({
-                    val intent = Intent(this, InfoActivity::class.java).apply {
+                    val intent = Intent(this, SerieInfoActivity::class.java).apply {
                         action = Intent.ACTION_SEND
                         putExtra("serie", serie)
                     }
@@ -105,14 +105,14 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
             }
     }
 
-    private fun createMarvelService(): Data {
+    private fun createMarvelService(): MarvelService {
         return Retrofit.Builder()
             .baseUrl(baseURL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(getOkHttpClient())
             .build()
-            .create(Data::class.java)
+            .create(MarvelService::class.java)
     }
 
     private fun fetchSerieInfo(resourceUrl: String): Disposable {
