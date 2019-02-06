@@ -5,4 +5,5 @@
     <color name="colorAccent">#1C5F08</color>
     <color name="textColorWhite">#FFFFFF</color>
     <color name="defaultTextViewColor">#F44336</color>
+    <color name="nav_color">#222222</color>
 </resources>

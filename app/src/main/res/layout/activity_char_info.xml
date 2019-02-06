@@ -79,19 +79,19 @@
 
     <GridView
             android:layout_width="wrap_content"
-            android:columnWidth="300dp"
-            android:numColumns="2"
-            android:verticalSpacing="4dp"
-            android:horizontalSpacing="8dp"
-            android:stretchMode="columnWidth"
             android:id="@+id/char_serie_gridview"
+            android:columnWidth="100dp"
+            android:numColumns="2"
+            android:verticalSpacing="5dp"
+            android:horizontalSpacing="-10dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             android:layout_marginTop="32dp"
             android:maxWidth="500dp"
             android:layout_height="450dp"
-            android:maxHeight="500dp"
-            android:gravity="center"/>
+            android:maxHeight="500dp"/>
 
     <TextView
             android:text="No description found for this @string/character"
