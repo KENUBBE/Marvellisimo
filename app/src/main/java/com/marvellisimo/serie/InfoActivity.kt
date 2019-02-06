@@ -35,7 +35,7 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
     private val baseURL: String = "http://gateway.marvel.com/v1/public/characters/"
     private val apiKEY: String = "?&ts=1&apikey=ca119f99531365ccb328f771ec231aa2&hash="
     private val hashKEY = MarvelService().generateHashKey()
-  
+
     lateinit var db: FirebaseFirestore
     lateinit var fav: CheckBox
 
@@ -48,109 +48,111 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
         fav.setOnCheckedChangeListener(this)
 
         infoName.text = serie.title
-      
+
         if (serie.description == "" || serie.description == null) {
-            infoDesc.text = getString(R.string.no_char_description)
-        } else infoDesc.text = serie.description
-
-        Picasso.get().load(serie.thumbnail.createUrl()).fit().centerCrop().into(infoThumbnail)
-        renderCharacter()
-    }
-
-    private fun renderCharacter() {
-        val gridView: GridView = findViewById(R.id.serie_char_gridview)
-        gridView.isVerticalScrollBarEnabled = false
-        val adapter = ItemAdapter(this, serie.characters.items)
-        gridView.adapter = adapter
-        gridView.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, v, position, id ->
-                val resourceUrl = serie.characters.items[position].resourceURI
-                fetchCharacterInfo(resourceUrl)
-                Handler().postDelayed({
-                    val intent = Intent(this, InfoActivity::class.java).apply {
-                        action = Intent.ACTION_SEND
-                        putExtra("char", character)
-                    }
-                    startActivity(intent)
-                }, 1500)
-            }
-    }
-
-
-    private fun createMarvelService(): Data {
-        return Retrofit.Builder()
-            .baseUrl(baseURL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .client(getOkHttpClient())
-            .build()
-            .create(Data::class.java)
-    }
-
-    private fun fetchCharacterInfo(resourceUrl: String): Disposable {
-        return createMarvelService()
-            .getCharacterBySerieId("""$resourceUrl$apiKEY$hashKEY""")
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { res ->
-                    character = Character(
-                        res.data.results[0].id,
-                        res.data.results[0].name,
-                        res.data.results[0].description,
-                        res.data.results[0].series,
-                        res.data.results[0].thumbnail
-                    )
-                    println("CHARACTER FROM API $character")
-                },
-                { error -> println("Error: ${error.message}") }
-            )
-    }
-
-    private fun getOkHttpClient(): OkHttpClient {
-        val builder = OkHttpClient.Builder()
-        return builder.build()
-      
-        if (serie.description != "" || serie.description != null) {
-            infoDesc.text = serie.description
-        } else infoDesc.text =
-            getString(R.string.no_char_description)
-
-        Picasso.get().load(serie.thumbnail.createUrl()).fit().centerCrop().into(infoThumbnail)
-
-        isSerieInDB()
-    }
-
-    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        if (isChecked) {
-            isSerieInDB()
+            infoDesc.text = getString(R.string.no_serie_description)
         } else {
-            deleteSerieFromFavorite()
+            infoDesc.text = serie.description
         }
-    }
 
-    private fun addSerieToFavorite() {
-        db.collection("favoriteSeries").document(serie.id.toString())
-            .set(serie)
-        Toast.makeText(this, "Added to favorites", Toast.LENGTH_LONG).show()
-    }
+            Picasso.get().load(serie.thumbnail.createUrl()).fit().centerCrop().into(infoThumbnail)
+            renderCharacter()
+        }
 
-    private fun deleteSerieFromFavorite() {
-        db.collection("favoriteSeries").document(serie.id.toString())
-            .delete()
-        Toast.makeText(this, "Deleted from favorites", Toast.LENGTH_LONG).show()
-    }
-
-    private fun isSerieInDB() {
-        db.collection("favoriteSeries").document(serie.id.toString())
-            .get()
-            .addOnSuccessListener { result ->
-                if (result.exists()) {
-                    fav.isChecked = true
-                } else if (!result.exists() && fav.isChecked) {
-                    addSerieToFavorite()
+        private fun renderCharacter() {
+            val gridView: GridView = findViewById(R.id.serie_char_gridview)
+            gridView.isVerticalScrollBarEnabled = false
+            val adapter = ItemAdapter(this, serie.characters.items)
+            gridView.adapter = adapter
+            gridView.onItemClickListener =
+                AdapterView.OnItemClickListener { parent, v, position, id ->
+                    val resourceUrl = serie.characters.items[position].resourceURI
+                    fetchCharacterInfo(resourceUrl)
+                    Handler().postDelayed({
+                        val intent = Intent(this, InfoActivity::class.java).apply {
+                            action = Intent.ACTION_SEND
+                            putExtra("char", character)
+                        }
+                        startActivity(intent)
+                    }, 1500)
                 }
-            }
-    }
+        }
 
-}
+
+        private fun createMarvelService(): Data {
+            return Retrofit.Builder()
+                .baseUrl(baseURL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(getOkHttpClient())
+                .build()
+                .create(Data::class.java)
+        }
+
+        private fun fetchCharacterInfo(resourceUrl: String): Disposable {
+            return createMarvelService()
+                .getCharacterBySerieId("""$resourceUrl$apiKEY$hashKEY""")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { res ->
+                        character = Character(
+                            res.data.results[0].id,
+                            res.data.results[0].name,
+                            res.data.results[0].description,
+                            res.data.results[0].series,
+                            res.data.results[0].thumbnail
+                        )
+                        println("CHARACTER FROM API $character")
+                    },
+                    { error -> println("Error: ${error.message}") }
+                )
+        }
+
+        private fun getOkHttpClient(): OkHttpClient {
+            val builder = OkHttpClient.Builder()
+            return builder.build()
+
+            if (serie.description != "" || serie.description != null) {
+                infoDesc.text = serie.description
+            } else infoDesc.text =
+                getString(R.string.no_char_description)
+
+            Picasso.get().load(serie.thumbnail.createUrl()).fit().centerCrop().into(infoThumbnail)
+
+            isSerieInDB()
+        }
+
+        override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+            if (isChecked) {
+                isSerieInDB()
+            } else {
+                deleteSerieFromFavorite()
+            }
+        }
+
+        private fun addSerieToFavorite() {
+            db.collection("favoriteSeries").document(serie.id.toString())
+                .set(serie)
+            Toast.makeText(this, "Added to favorites", Toast.LENGTH_LONG).show()
+        }
+
+        private fun deleteSerieFromFavorite() {
+            db.collection("favoriteSeries").document(serie.id.toString())
+                .delete()
+            Toast.makeText(this, "Deleted from favorites", Toast.LENGTH_LONG).show()
+        }
+
+        private fun isSerieInDB() {
+            db.collection("favoriteSeries").document(serie.id.toString())
+                .get()
+                .addOnSuccessListener { result ->
+                    if (result.exists()) {
+                        fav.isChecked = true
+                    } else if (!result.exists() && fav.isChecked) {
+                        addSerieToFavorite()
+                    }
+                }
+        }
+
+    }

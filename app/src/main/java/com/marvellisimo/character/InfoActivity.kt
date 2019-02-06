@@ -43,8 +43,11 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
         fav.setOnCheckedChangeListener(this)
 
         infoName.text = character.name
-        if (character.description != "" || character.description != null) infoDesc.text = character.description else infoDesc.text =
-            getString(R.string.no_char_description)
+        if (character.description == "" || character.description == null) {
+            infoDesc.text = getString(R.string.no_char_description)
+        } else {
+            infoDesc.text = character.description
+        }
 
         Picasso.get().load(character.thumbnail.createUrl()).fit().centerCrop().into(infoThumbnail)
         isCharacterInDB()
@@ -71,7 +74,7 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        if(isChecked) {
+        if (isChecked) {
             isCharacterInDB()
         } else {
             deleteCharacterFromFavorite()
@@ -79,9 +82,9 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
     }
 
     private fun addCharacterToFavorite() {
-            db.collection("favoriteCharacters").document(character.id.toString())
-                .set(character)
-            Toast.makeText(this, "Added to favorites", Toast.LENGTH_LONG).show()
+        db.collection("favoriteCharacters").document(character.id.toString())
+            .set(character)
+        Toast.makeText(this, "Added to favorites", Toast.LENGTH_LONG).show()
     }
 
     private fun deleteCharacterFromFavorite() {
@@ -96,7 +99,7 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
             .addOnSuccessListener { result ->
                 if (result.exists()) {
                     fav.isChecked = true
-                } else if (!result.exists() && fav.isChecked){
+                } else if (!result.exists() && fav.isChecked) {
                     addCharacterToFavorite()
                 }
             }

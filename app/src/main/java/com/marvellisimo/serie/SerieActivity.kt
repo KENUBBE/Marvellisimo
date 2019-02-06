@@ -18,6 +18,7 @@ import com.marvellisimo.service.SerieImageAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_serie.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -38,6 +39,11 @@ class SerieActivity : AppCompatActivity() {
         fetchSerie()
         setContentView(R.layout.activity_serie)
         addTextWatcherOnSearchField()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        series_searchField.clearFocus()
     }
 
     private fun addTextWatcherOnSearchField() {
