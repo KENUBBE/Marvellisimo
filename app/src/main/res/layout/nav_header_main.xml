@@ -12,6 +12,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark"
         android:orientation="vertical"
         android:gravity="bottom"
+
         >
 
     <ImageView

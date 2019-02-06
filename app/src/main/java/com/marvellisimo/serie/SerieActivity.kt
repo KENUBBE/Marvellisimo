@@ -7,6 +7,7 @@ import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.EditText
 import android.widget.GridView
 import com.marvellisimo.R
@@ -17,6 +18,7 @@ import com.marvellisimo.service.SerieImageAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_serie.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -37,6 +39,11 @@ class SerieActivity : AppCompatActivity() {
         fetchSerie()
         setContentView(R.layout.activity_serie)
         addTextWatcherOnSearchField()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        series_searchField.clearFocus()
     }
 
     private fun addTextWatcherOnSearchField() {
@@ -81,8 +88,8 @@ class SerieActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {res -> createSerie(res.data.results)},
-                {error -> println("Error: ${error.message}")}
+                { res -> createSerie(res.data.results) },
+                { error -> println("Error: ${error.message}") }
             )
     }
 
@@ -123,7 +130,8 @@ class SerieActivity : AppCompatActivity() {
                         putExtra("serie", series[position])
                     }
                     startActivity(intent)
-                }
+
+            }
     }
 
     private fun getOkHttpClient(): OkHttpClient {
