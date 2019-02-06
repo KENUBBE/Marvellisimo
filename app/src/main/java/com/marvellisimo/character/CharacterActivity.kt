@@ -18,6 +18,8 @@ import com.marvellisimo.service.CharacterImageAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_character.*
+import kotlinx.android.synthetic.main.activity_serie.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -39,6 +41,11 @@ class CharacterActivity : AppCompatActivity() {
         fetchCharacter()
         setContentView(R.layout.activity_character)
         addTextWatcherOnSearchField()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        character_searchField.clearFocus()
     }
 
     private fun addTextWatcherOnSearchField() {

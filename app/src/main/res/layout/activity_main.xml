@@ -12,17 +12,20 @@
     <include
             layout="@layout/app_bar_main"
             android:layout_width="match_parent"
+
             android:layout_height="match_parent"/>
 
     <android.support.design.widget.NavigationView
+            android:background="#222222"
             android:id="@+id/nav_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             app:headerLayout="@layout/nav_header_main"
             app:menu="@menu/activity_main_drawer"
+            app:itemIconTint="#FFFFFF"
             app:itemTextColor="@color/textColorWhite"
-            app:itemBackground="@color/common_google_signin_btn_text_dark_focused"
+            app:itemBackground="@color/nav_color"
             />
 
 </android.support.v4.widget.DrawerLayout>

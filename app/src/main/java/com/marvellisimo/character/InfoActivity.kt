@@ -43,8 +43,11 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
         fav.setOnCheckedChangeListener(this)
 
         infoName.text = character.name
-        if (character.description != "" || character.description != null) infoDesc.text = character.description else infoDesc.text =
-            getString(R.string.no_char_description)
+        if (character.description == "" || character.description == null) {
+            infoDesc.text = getString(R.string.no_char_description)
+        } else {
+            infoDesc.text = character.description
+        }
 
         Picasso.get().load(character.thumbnail.createUrl()).fit().centerCrop().into(infoThumbnail)
         isCharacterInDB()
@@ -66,13 +69,12 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
                         putExtra("serie", serie)
                     }
                     startActivity(intent)
-                }, 1000)
+                }, 1500)
             }
     }
 
-
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        if(isChecked) {
+        if (isChecked) {
             isCharacterInDB()
         } else {
             deleteCharacterFromFavorite()
@@ -80,9 +82,9 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
     }
 
     private fun addCharacterToFavorite() {
-            db.collection("favoriteCharacters").document(character.id.toString())
-                .set(character)
-            Toast.makeText(this, "Added to favorites", Toast.LENGTH_LONG).show()
+        db.collection("favoriteCharacters").document(character.id.toString())
+            .set(character)
+        Toast.makeText(this, "Added to favorites", Toast.LENGTH_LONG).show()
     }
 
     private fun deleteCharacterFromFavorite() {
@@ -97,7 +99,7 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
             .addOnSuccessListener { result ->
                 if (result.exists()) {
                     fav.isChecked = true
-                } else if (!result.exists() && fav.isChecked){
+                } else if (!result.exists() && fav.isChecked) {
                     addCharacterToFavorite()
                 }
             }
@@ -115,7 +117,7 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
 
     private fun fetchSerieInfo(resourceUrl: String): Disposable {
         return createMarvelService()
-            .getSerieById(resourceUrl + apiKEY + hashKEY)
+            .getSerieByCharId(resourceUrl + apiKEY + hashKEY)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -124,6 +126,7 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
                         res.data.results[0].id,
                         res.data.results[0].title,
                         res.data.results[0].description,
+                        res.data.results[0].characters,
                         res.data.results[0].startYear,
                         res.data.results[0].thumbnail
                     )
