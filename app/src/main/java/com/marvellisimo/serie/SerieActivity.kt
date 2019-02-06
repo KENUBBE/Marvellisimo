@@ -124,12 +124,13 @@ class SerieActivity : AppCompatActivity() {
         gridView.adapter = SerieImageAdapter(this, series)
 
         gridView.onItemClickListener =
-            OnItemClickListener { parent, v, position, id ->
-                val intent = Intent(this, InfoActivity::class.java).apply {
-                    action = Intent.ACTION_SEND
-                    putExtra("serie", series[position])
-                }
-                startActivity(intent)
+                AdapterView.OnItemClickListener { parent, v, position, id ->
+                    val intent = Intent(this, InfoActivity::class.java).apply {
+                        action = Intent.ACTION_SEND
+                        putExtra("serie", series[position])
+                    }
+                    startActivity(intent)
+
             }
     }
 

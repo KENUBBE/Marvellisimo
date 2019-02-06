@@ -14,6 +14,7 @@ import com.marvellisimo.R
 import com.marvellisimo.character.InfoActivity
 import com.marvellisimo.dto.character.Character
 import com.marvellisimo.dto.series.Serie
+import com.marvellisimo.favorite.FavSerieList
 import com.marvellisimo.repository.Data
 import com.marvellisimo.service.ItemAdapter
 import com.marvellisimo.service.MarvelService
@@ -77,7 +78,6 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
                     }, 1500)
                 }
         }
-
 
         private fun createMarvelService(): Data {
             return Retrofit.Builder()
