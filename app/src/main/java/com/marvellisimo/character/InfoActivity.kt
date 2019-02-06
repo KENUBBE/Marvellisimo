@@ -66,10 +66,9 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
                         putExtra("serie", serie)
                     }
                     startActivity(intent)
-                }, 1000)
+                }, 1500)
             }
     }
-
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         if(isChecked) {
@@ -115,7 +114,7 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
 
     private fun fetchSerieInfo(resourceUrl: String): Disposable {
         return createMarvelService()
-            .getSerieById(resourceUrl + apiKEY + hashKEY)
+            .getSerieByCharId(resourceUrl + apiKEY + hashKEY)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -124,6 +123,7 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
                         res.data.results[0].id,
                         res.data.results[0].title,
                         res.data.results[0].description,
+                        res.data.results[0].characters,
                         res.data.results[0].startYear,
                         res.data.results[0].thumbnail
                     )

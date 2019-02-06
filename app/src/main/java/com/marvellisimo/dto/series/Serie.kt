@@ -8,6 +8,7 @@ data class Serie (
     val id: Int,
     val title: String,
     val description: String?,
+    val characters: SerieCharacter,
     val startYear: Int,
     val thumbnail: Thumbnail
 ): Parcelable

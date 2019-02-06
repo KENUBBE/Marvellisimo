@@ -7,6 +7,7 @@ import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.EditText
 import android.widget.GridView
 import com.marvellisimo.R
@@ -81,8 +82,8 @@ class SerieActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                {res -> createSerie(res.data.results)},
-                {error -> println("Error: ${error.message}")}
+                { res -> createSerie(res.data.results) },
+                { error -> println("Error: ${error.message}") }
             )
     }
 
@@ -117,13 +118,13 @@ class SerieActivity : AppCompatActivity() {
         gridView.adapter = SerieImageAdapter(this, series)
 
         gridView.onItemClickListener =
-                AdapterView.OnItemClickListener { parent, v, position, id ->
-                    val intent = Intent(this, InfoActivity::class.java)
-                    intent.putExtra("title", series[position].title)
-                    intent.putExtra("desc", series[position].description)
-                    intent.putExtra("thumbnail", series[position].thumbnail.createUrl())
-                    startActivity(intent)
+            OnItemClickListener { parent, v, position, id ->
+                val intent = Intent(this, InfoActivity::class.java).apply {
+                    action = Intent.ACTION_SEND
+                    putExtra("serie", series[position])
                 }
+                startActivity(intent)
+            }
     }
 
     private fun getOkHttpClient(): OkHttpClient {
