@@ -20,9 +20,13 @@ class FavCharList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fav_char_list)
-        loadFavoriteCharacter()
     }
 
+    override fun onResume() {
+        super.onResume()
+        characters.clear()
+        loadFavoriteCharacter()
+    }
 
     private fun loadFavoriteCharacter() {
         db.collection("favoriteCharacters")
@@ -46,10 +50,6 @@ class FavCharList : AppCompatActivity() {
                     action = Intent.ACTION_SEND
                     putExtra("char", characters[position])
                 }
-
-                //intent.putExtra("name", characters[position].name)
-                //intent.putExtra("desc", characters[position].description)
-                //intent.putExtra("thumbnail", characters[position].thumbnail.createUrl())
                 startActivity(intent)
             }
     }

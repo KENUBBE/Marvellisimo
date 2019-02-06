@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import com.marvellisimo.R
 import com.marvellisimo.dto.series.Serie
+import com.marvellisimo.favorite.FavSerieList
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_serie_info.*
 
@@ -16,7 +17,6 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
     lateinit var serie: Serie
     lateinit var db: FirebaseFirestore
     lateinit var fav: CheckBox
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,10 +27,12 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
         fav.setOnCheckedChangeListener(this)
 
         infoName.text = serie.title
-        if (serie.description != "" || serie.description != null) {
+        if (serie.description == "" || serie.description == null) {
+            infoDesc.text =
+                getString(R.string.no_char_description)
+        } else {
             infoDesc.text = serie.description
-        } else infoDesc.text =
-            getString(R.string.no_char_description)
+        }
 
         Picasso.get().load(serie.thumbnail.createUrl()).fit().centerCrop().into(infoThumbnail)
 

@@ -11,10 +11,12 @@ import com.squareup.picasso.Picasso
 class FavoriteActivity : AppCompatActivity() {
 
     lateinit var charImg: ImageView
+    lateinit var serieImg: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite)
         navigateToFavoriteCharacter()
+        navigateToFavoriteSerie()
     }
 
     private fun navigateToFavoriteCharacter() {
@@ -22,6 +24,15 @@ class FavoriteActivity : AppCompatActivity() {
         Picasso.get().load(R.drawable.marvel_characters).fit().centerCrop().into(charImg)
         charImg.setOnClickListener {
             val intent = Intent(this,FavCharList::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun navigateToFavoriteSerie() {
+        serieImg = findViewById(R.id.fav_series_img)
+        Picasso.get().load(R.drawable.marvel_series).fit().centerCrop().into(serieImg)
+        serieImg.setOnClickListener {
+            val intent = Intent(this,FavSerieList::class.java)
             startActivity(intent)
         }
     }

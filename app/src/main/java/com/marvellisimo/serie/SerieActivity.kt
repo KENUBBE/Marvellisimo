@@ -122,9 +122,6 @@ class SerieActivity : AppCompatActivity() {
                         action = Intent.ACTION_SEND
                         putExtra("serie", series[position])
                     }
-                    /*intent.putExtra("title", series[position].title)
-                    intent.putExtra("desc", series[position].description)
-                    intent.putExtra("thumbnail", series[position].thumbnail.createUrl())*/
                     startActivity(intent)
                 }
     }
