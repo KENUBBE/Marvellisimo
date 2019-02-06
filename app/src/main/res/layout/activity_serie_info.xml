@@ -46,7 +46,7 @@
                 android:button="@drawable/fav_checkbox_selector"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/fav_char"
+                android:id="@+id/fav_serie"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp"
                 app:layout_constraintEnd_toEndOf="parent"

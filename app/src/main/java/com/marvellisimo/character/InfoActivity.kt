@@ -43,7 +43,7 @@ class InfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeListener
         fav.setOnCheckedChangeListener(this)
 
         infoName.text = character.name
-        if (character.description != "") infoDesc.text = character.description else infoDesc.text =
+        if (character.description != "" || character.description != null) infoDesc.text = character.description else infoDesc.text =
             getString(R.string.no_char_description)
 
         Picasso.get().load(character.thumbnail.createUrl()).fit().centerCrop().into(infoThumbnail)
