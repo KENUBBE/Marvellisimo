@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.EditText
 import android.widget.GridView
+import android.widget.Toast
 import com.marvellisimo.R
 import com.marvellisimo.dto.series.Serie
 import com.marvellisimo.repository.Data
@@ -110,6 +111,7 @@ class SerieActivity : AppCompatActivity() {
             searchResults.add(res)
         }
         renderSerie(searchResults)
+        Toast.makeText(this, "Found ${searchResults.size} serie(s)", Toast.LENGTH_LONG).show()
     }
 
     private fun createSerie(serie: ArrayList<Serie>) {
@@ -124,13 +126,12 @@ class SerieActivity : AppCompatActivity() {
         gridView.adapter = SerieImageAdapter(this, series)
 
         gridView.onItemClickListener =
-                AdapterView.OnItemClickListener { parent, v, position, id ->
-                    val intent = Intent(this, InfoActivity::class.java).apply {
-                        action = Intent.ACTION_SEND
-                        putExtra("serie", series[position])
-                    }
-                    startActivity(intent)
-
+            AdapterView.OnItemClickListener { parent, v, position, id ->
+                val intent = Intent(this, InfoActivity::class.java).apply {
+                    action = Intent.ACTION_SEND
+                    putExtra("serie", series[position])
+                }
+                startActivity(intent)
             }
     }
 

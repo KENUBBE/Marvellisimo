@@ -6,9 +6,9 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Character (
-    var id: Int = 0,
-    var name: String = "",
-    var description: String = "",
-    var series: CharacterSerie = CharacterSerie(arrayListOf(Item("",""))),
-    var thumbnail: Thumbnail = Thumbnail("","")
+    val id: Int = 0,
+    val name: String = "",
+    val description: String = "",
+    val series: CharacterSerie = CharacterSerie(arrayListOf(Item("", ""))),
+    val thumbnail: Thumbnail = Thumbnail("","")
 ): Parcelable

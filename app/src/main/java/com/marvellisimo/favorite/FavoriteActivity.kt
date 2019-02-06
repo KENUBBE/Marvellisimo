@@ -12,6 +12,7 @@ class FavoriteActivity : AppCompatActivity() {
 
     lateinit var charImg: ImageView
     lateinit var serieImg: ImageView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite)

@@ -111,6 +111,7 @@ class CharacterActivity : AppCompatActivity() {
             searchResults.add(res)
         }
         renderCharacter(searchResults)
+        Toast.makeText(this, "Found ${searchResults.size} character(s)", Toast.LENGTH_LONG).show()
     }
 
     private fun createCharacter(character: ArrayList<Character>) {
