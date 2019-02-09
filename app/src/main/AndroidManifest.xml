@@ -13,19 +13,26 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
 
-        <activity android:name=".favorite.FavSerieList">
+        <activity android:name=".favorite.FavSerieList"
+                  android:launchMode="singleTop">
         </activity>
-        <activity android:name=".favorite.FavCharList">
+        <activity android:name=".favorite.FavCharList"
+                  android:launchMode="singleTop">
         </activity>
-        <activity android:name=".favorite.FavoriteActivity">
+        <activity android:name=".favorite.FavoriteActivity"
+                  android:launchMode="singleTop">
         </activity>
-        <activity android:name=".serie.SerieInfoActivity">
+        <activity android:name=".serie.SerieInfoActivity"
+                android:launchMode="singleTop">
         </activity>
-        <activity android:name=".character.CharInfoActivity">
+        <activity android:name=".character.CharInfoActivity"
+                  android:launchMode="singleTop">
         </activity>
-        <activity android:name=".serie.SerieActivity">
+        <activity android:name=".serie.SerieActivity"
+                  android:launchMode="singleTop">
         </activity>
-        <activity android:name=".character.CharacterActivity">
+        <activity android:name=".character.CharacterActivity"
+                  android:launchMode="singleTop">
         </activity>
         <activity
                 android:name=".MainActivity"
