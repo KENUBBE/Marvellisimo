@@ -12,27 +12,49 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-
-        <activity android:name=".favorite.FavSerieList"
-                  android:launchMode="singleTop">
+        <activity
+                android:name=".favorite.FavSerieList"
+                android:launchMode="singleTop"
+                android:label="Favorite Series"
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".favorite.FavCharList"
-                  android:launchMode="singleTop">
+        <activity
+                android:name=".favorite.FavCharList"
+                android:launchMode="singleTop"
+                android:label="Favorite Characters"
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".favorite.FavoriteActivity"
-                  android:launchMode="singleTop">
+        <activity
+                android:name=".favorite.FavoriteActivity"
+                android:launchMode="singleTop"
+                android:label="Favorites"
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".serie.SerieInfoActivity"
-                android:launchMode="singleTop">
+        <activity
+                android:name=".serie.SerieInfoActivity"
+                android:launchMode="singleTop"
+                android:label="Info"
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".character.CharInfoActivity"
-                  android:launchMode="singleTop">
+        <activity
+                android:name=".character.CharInfoActivity"
+                android:launchMode="singleTop"
+                android:label="Info"
+                android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".serie.SerieActivity"
-                  android:launchMode="singleTop">
+        <activity
+                android:name=".serie.SerieActivity"
+                android:launchMode="singleTop"
+                android:label="Series"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:windowSoftInputMode="adjustNothing">
         </activity>
-        <activity android:name=".character.CharacterActivity"
-                  android:launchMode="singleTop">
+        <activity
+                android:name=".character.CharacterActivity"
+                android:launchMode="singleTop"
+                android:label="Characters"
+                android:theme="@style/AppTheme.NoActionBar"
+                android:windowSoftInputMode="adjustNothing">
         </activity>
         <activity
                 android:name=".MainActivity"

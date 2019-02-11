@@ -4,10 +4,12 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.widget.Toolbar
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.marvellisimo.DrawerUtil
 import com.marvellisimo.R
 import com.marvellisimo.dto.character.Character
 import com.marvellisimo.repository.MarvelService
@@ -17,6 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_character.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -38,6 +41,9 @@ class CharacterActivity : AppCompatActivity() {
         fetchCharacter()
         setContentView(R.layout.activity_character)
         addTextWatcherOnSearchField()
+
+        setSupportActionBar(toolbar_char)
+        DrawerUtil.getDrawer(this, toolbar_char)
     }
 
     override fun onPause() {

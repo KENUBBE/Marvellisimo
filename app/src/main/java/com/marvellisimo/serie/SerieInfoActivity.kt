@@ -10,6 +10,7 @@ import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
+import com.marvellisimo.DrawerUtil
 import com.marvellisimo.R
 import com.marvellisimo.character.CharInfoActivity
 import com.marvellisimo.dto.character.Character
@@ -58,6 +59,9 @@ class SerieInfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeLis
         Picasso.get().load(serie.thumbnail.createUrl()).fit().centerCrop().into(infoThumbnail)
         isSerieInDB()
         renderCharacter()
+
+        setSupportActionBar(toolbar_serieInfo)
+        DrawerUtil.getDrawer(this, toolbar_serieInfo)
     }
 
     private fun renderCharacter() {

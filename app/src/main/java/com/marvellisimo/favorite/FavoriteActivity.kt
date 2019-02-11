@@ -3,10 +3,11 @@ package com.marvellisimo.favorite
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
+import com.marvellisimo.DrawerUtil
 import com.marvellisimo.R
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_favorite.*
 
 class FavoriteActivity : AppCompatActivity() {
 
@@ -18,6 +19,10 @@ class FavoriteActivity : AppCompatActivity() {
         setContentView(R.layout.activity_favorite)
         navigateToFavoriteCharacter()
         navigateToFavoriteSerie()
+
+        setSupportActionBar(toolbar_favorite)
+        DrawerUtil.getDrawer(this, toolbar_favorite)
+
     }
 
     private fun navigateToFavoriteCharacter() {

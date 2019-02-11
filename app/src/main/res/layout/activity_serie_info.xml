@@ -14,6 +14,24 @@
             android:layout_height="wrap_content"
             tools:context=".character.CharInfoActivity">
 
+        <android.support.design.widget.AppBarLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:theme="@style/AppTheme.AppBarOverlay"
+                android:id="@+id/appBarLayout7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+            <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar_serieInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/colorPrimary"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+        </android.support.design.widget.AppBarLayout>
+
         <ImageView
                 android:layout_width="150dp"
                 android:layout_height="150dp"
@@ -23,10 +41,9 @@
                 android:layout_marginStart="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/infoName"
-                />
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@+id/appBarLayout7"/>
 
         <TextView
                 android:text="TextView"
@@ -47,15 +64,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/fav_serie"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/infoThumbnail"
+                app:layout_constraintStart_toEndOf="@+id/infoThumbnail"
                 android:layout_marginStart="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="16dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_bias="0.951"
-                app:layout_constraintBottom_toTopOf="@+id/infoThumbnail"
-                app:layout_constraintVertical_bias="0.0"/>
+                app:layout_constraintHorizontal_bias="0.911"
+                app:layout_constraintVertical_bias="0.321"/>
 
         <TextView
                 android:text="CHARACTERS"
