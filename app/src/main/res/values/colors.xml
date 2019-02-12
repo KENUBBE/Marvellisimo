@@ -6,4 +6,5 @@
     <color name="textColorWhite">#FFFFFF</color>
     <color name="defaultTextViewColor">#F44336</color>
     <color name="nav_color">#222222</color>
+    <color name="nav_color_names">#5A5A5A</color>
 </resources>
