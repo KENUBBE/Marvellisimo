@@ -4,10 +4,12 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.widget.Toolbar
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.marvellisimo.DrawerUtil
 import com.marvellisimo.R
 import com.marvellisimo.dto.character.Character
 import com.marvellisimo.repository.MarvelService
@@ -38,6 +40,9 @@ class CharacterActivity : AppCompatActivity() {
         fetchCharacter()
         setContentView(R.layout.activity_character)
         addTextWatcherOnSearchField()
+
+        setSupportActionBar(toolbar_char)
+        DrawerUtil.getDrawer(this, toolbar_char)
     }
 
     override fun onPause() {

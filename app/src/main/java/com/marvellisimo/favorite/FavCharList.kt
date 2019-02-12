@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.widget.AdapterView
 import android.widget.GridView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.marvellisimo.DrawerUtil
 import com.marvellisimo.R
 import com.marvellisimo.character.CharInfoActivity
 import com.marvellisimo.dto.character.Character
 import com.marvellisimo.service.CharacterImageAdapter
+import kotlinx.android.synthetic.main.activity_fav_char_list.*
 
 class FavCharList : AppCompatActivity() {
 
@@ -20,6 +22,9 @@ class FavCharList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fav_char_list)
+
+        setSupportActionBar(toolbar_favCharList)
+        DrawerUtil.getDrawer(this, toolbar_favCharList)
     }
 
     override fun onResume() {

@@ -13,4 +13,14 @@
     <string name="search_for_character">Search for characters</string>
     <string name="search_for_serie">Search for series</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum luctus mauris bibendum, interdum dui vel, molestie erat. Vestibulum dapibus odio est, et volutpat diam placerat eget. Vestibulum purus diam, commodo eget ultricies quis, sollicitudin quis ligula. Cras vitae efficitur quam, et luctus nisl.</string>
+    <string name="title_activity_test_nav">TestNavActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="nav_characters">Characters</string>
+    <string name="nav_series">Series</string>
+    <string name="nav_favorites">Favorites</string>
+
+    <string name="action_example">Example action</string>
+    <string name="nav_home">Home</string>
 </resources>

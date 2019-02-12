@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.GridView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.marvellisimo.DrawerUtil
 import com.marvellisimo.R
 import com.marvellisimo.dto.series.Serie
 import com.marvellisimo.serie.SerieInfoActivity
 import com.marvellisimo.service.SerieImageAdapter
+import kotlinx.android.synthetic.main.activity_fav_serie_list.*
 
 class FavSerieList : AppCompatActivity() {
 
@@ -19,6 +21,9 @@ class FavSerieList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fav_serie_list)
+
+        setSupportActionBar(toolbar_favSerieList)
+        DrawerUtil.getDrawer(this, toolbar_favSerieList)
     }
 
     override fun onResume() {

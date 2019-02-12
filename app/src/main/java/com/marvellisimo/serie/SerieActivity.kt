@@ -4,12 +4,14 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.widget.Toolbar
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.AdapterView
 import android.widget.EditText
 import android.widget.GridView
 import android.widget.Toast
+import com.marvellisimo.DrawerUtil
 import com.marvellisimo.R
 import com.marvellisimo.dto.series.Serie
 import com.marvellisimo.repository.MarvelService
@@ -18,6 +20,7 @@ import com.marvellisimo.service.SerieImageAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_character.*
 import kotlinx.android.synthetic.main.activity_serie.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -39,11 +42,15 @@ class SerieActivity : AppCompatActivity() {
         fetchSerie()
         setContentView(R.layout.activity_serie)
         addTextWatcherOnSearchField()
+
+        setSupportActionBar(toolbar_serie)
+        DrawerUtil.getDrawer(this, toolbar_serie)
     }
 
     override fun onPause() {
         super.onPause()
         series_searchField.clearFocus()
+
     }
 
     private fun addTextWatcherOnSearchField() {

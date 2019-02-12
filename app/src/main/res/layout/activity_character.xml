@@ -8,6 +8,23 @@
         android:layout_height="match_parent"
         tools:context=".character.CharacterActivity">
 
+    <android.support.design.widget.AppBarLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            android:id="@+id/appBarLayout3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+        <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_char"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    </android.support.design.widget.AppBarLayout>
 
     <EditText
             android:id="@+id/character_searchField"
@@ -18,11 +35,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="8dp"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintVertical_bias="0.011"
+            app:layout_constraintHorizontal_bias="0.494"
             android:inputType="textNoSuggestions"
             android:textAlignment="center"
             android:textColor="@color/common_google_signin_btn_text_dark_default"
@@ -32,7 +46,9 @@
             android:visibility="visible"
             android:selectAllOnFocus="false"
             android:textCursorDrawable="@color/textColorWhite"
-            />
+            android:layout_marginBottom="560dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout3"/>
 
 
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -45,7 +61,10 @@
               android:horizontalSpacing="-10dp"
               android:stretchMode="columnWidth"
               android:gravity="center"
-              app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="80dp"
+              app:layout_constraintStart_toStartOf="parent"
+              android:layout_marginTop="80dp"
               app:layout_constraintTop_toTopOf="@+id/character_searchField"/>
 </android.support.constraint.ConstraintLayout>
+
+
 

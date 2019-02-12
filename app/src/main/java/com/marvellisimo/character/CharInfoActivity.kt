@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.widget.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.marvellisimo.DrawerUtil
 import com.marvellisimo.R
 import com.marvellisimo.dto.character.Character
 import com.marvellisimo.dto.series.Serie
@@ -18,6 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_char_info.*
+import kotlinx.android.synthetic.main.activity_serie.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -52,6 +54,9 @@ class CharInfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeList
         Picasso.get().load(character.thumbnail.createUrl()).fit().centerCrop().into(infoThumbnail)
         isCharacterInDB()
         renderSerie()
+
+        setSupportActionBar(toolbar_charInfo)
+        DrawerUtil.getDrawer(this, toolbar_charInfo)
     }
 
     private fun renderSerie() {
