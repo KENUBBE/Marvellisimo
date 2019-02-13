@@ -28,19 +28,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 class CharacterActivity : AppCompatActivity() {
     val db = FirebaseFirestore.getInstance()
     private val baseURL: String = "http://gateway.marvel.com/v1/public/"
-    private val apiKEY: String = "characters?&ts=1&apikey=ca119f99531365ccb328f771ec231aa2&hash="
     private val prefixApi: String = "characters?&nameStartsWith="
     private val suffixApi: String = "&ts=1&apikey=ca119f99531365ccb328f771ec231aa2&hash="
     private val hashKEY = HexBuilder().generateHashKey()
     private val characters = arrayListOf<Character>()
     private var searchResults = arrayListOf<Character>()
+    private val popularCharacters = arrayListOf<Character>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fetchCharacter()
+        fetchPopularCharacters()
         setContentView(R.layout.activity_character)
         addTextWatcherOnSearchField()
-
         setSupportActionBar(toolbar_char)
         DrawerUtil.getDrawer(this, toolbar_char)
     }
@@ -86,15 +85,16 @@ class CharacterActivity : AppCompatActivity() {
             .create(MarvelService::class.java)
     }
 
-    private fun fetchCharacter(): Disposable {
-        return createMarvelService()
-            .getCharacterData(apiKEY + hashKEY)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { res -> createCharacter(res.data.results) },
-                { error -> println("Error: ${error.message}") }
-            )
+    private fun fetchPopularCharacters() {
+        db.collection("popularCharacters")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val char = document.toObject(Character::class.java)
+                    popularCharacters.add(char)
+                }
+                renderCharacter(popularCharacters)
+            }
     }
 
     private fun fetchCharacterByStartsWith(userInput: Editable): Disposable {
@@ -103,7 +103,10 @@ class CharacterActivity : AppCompatActivity() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { res -> println(res.data.results); searchResults.clear(); createSearchResult(res.data.results) },
+                { res ->
+                    searchResults.clear()
+                    createSearchResult(res.data.results)
+                },
                 { error -> println("Error: ${error.message}") }
             )
     }
@@ -116,12 +119,6 @@ class CharacterActivity : AppCompatActivity() {
         Toast.makeText(this, "Found ${searchResults.size} character(s)", Toast.LENGTH_LONG).show()
     }
 
-    private fun createCharacter(character: ArrayList<Character>) {
-        for (char in character) {
-            characters.add(char)
-        }
-        renderCharacter(characters)
-    }
 
     private fun renderCharacter(characters: ArrayList<Character>) {
         val gridView: GridView = findViewById(R.id.char_gridview)

@@ -23,5 +23,9 @@ interface MarvelService {
     fun getSerieByCharId(@Url url: String): Single<com.marvellisimo.dto.series.Response>
 
     @GET
-    fun getCharacterBySerieId(@Url url: String): Single<com.marvellisimo.dto.character.Response>
+    fun getCharacterBySerieId(@Url url: String): Single<Response>
+
+    @GET
+    fun getCharacterById(@Url url: String): Single<Response>
+
 }
