@@ -29,8 +29,8 @@ class CharInfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeList
 
     lateinit var character: Character
     lateinit var db: FirebaseFirestore
-    lateinit var serie: Serie
     lateinit var fav: CheckBox
+    private var serie: Serie = Serie()
 
     private val baseURL: String = "http://gateway.marvel.com/v1/public/series/"
     private val apiKEY: String = "?&ts=1&apikey=ca119f99531365ccb328f771ec231aa2&hash="

@@ -3,129 +3,147 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
+            tools:context=".character.CharInfoActivity"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".character.CharInfoActivity">
+            android:layout_height="match_parent">
 
 
-<android.support.constraint.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:context=".character.CharInfoActivity">
-
-    <android.support.design.widget.AppBarLayout
+    <android.support.constraint.ConstraintLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            android:id="@+id/appBarLayout6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:id="@+id/constraintLayout">
 
-        <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar_charInfo"
+
+        <android.support.design.widget.AppBarLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:theme="@style/AppTheme.AppBarOverlay"
+                android:id="@+id/appBarLayout6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+            <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar_charInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/colorPrimary"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <ImageView
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal_background"
+                android:id="@+id/infoThumbnail"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/infoName"
+                app:layout_constraintHorizontal_bias="0.497"
+                android:layout_marginTop="30dp"
+                app:layout_constraintTop_toBottomOf="@+id/appBarLayout6"/>
+
+        <TextView
+                android:text="TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="14sp"
+                android:autoSizeStepGranularity="2sp"
+                android:id="@+id/infoName"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/infoThumbnail"
+                android:layout_marginTop="32dp"/>
+
+        <CheckBox
+                android:button="@drawable/fav_checkbox_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/fav_char"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toBottomOf="@+id/infoThumbnail"
+                app:layout_constraintStart_toEndOf="@+id/infoThumbnail"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintHorizontal_bias="0.912"
+                app:layout_constraintVertical_bias="0.321"/>
+
+        <TextView
+                android:text="SERIES"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:textColor="@color/defaultTextViewColor"
+                android:typeface="serif"
+                android:lineSpacingExtra="18sp"
+                android:fontFamily="serif"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/infoDesc"/>
+
+        <com.marvellisimo.service.CustomGridView
+                android:id="@+id/char_serie_gridview"
+                android:columnWidth="25dp"
+                android:verticalSpacing="20dp"
+                android:horizontalSpacing="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView2"
+                android:layout_marginTop="32dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:numColumns="2"
+                android:stretchMode="columnWidth"/>
 
-    </android.support.design.widget.AppBarLayout>
+        <TextView
+                android:text="No description found for this @string/character"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="16dp"
+                android:paddingStart="16dp"
+                android:autoSizeTextType="uniform"
+                android:autoSizeMinTextSize="12sp"
+                android:autoSizeMaxTextSize="16sp"
+                android:autoSizeStepGranularity="2sp"
+                android:id="@+id/infoDesc"
+                android:textAlignment="center"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintTop_toBottomOf="@+id/infoName"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/textView2"
+                android:textSize="12sp"
+                app:layout_constraintVertical_chainStyle="spread_inside"/>
 
-    <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            app:srcCompat="@drawable/common_google_signin_btn_icon_dark_normal_background"
-            android:id="@+id/infoThumbnail"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/infoName"
-            app:layout_constraintHorizontal_bias="0.497"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout6"/>
+    </android.support.constraint.ConstraintLayout>
 
-    <TextView
-            android:text="TextView"
-            android:layout_width="127dp"
-            android:layout_height="26dp"
-            android:id="@+id/infoName"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/infoThumbnail"
-            android:layout_marginTop="32dp"/>
-
-    <CheckBox
-            android:button="@drawable/fav_checkbox_selector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/fav_char"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="@+id/infoThumbnail"
-            app:layout_constraintStart_toEndOf="@+id/infoThumbnail"
-            android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintHorizontal_bias="0.912"
-            app:layout_constraintVertical_bias="0.321"/>
-
-    <TextView
-            android:text="SERIES"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:textSize="18sp"
-            android:textAlignment="center"
-            android:textStyle="bold"
-            android:textAllCaps="false"
-            android:textColor="@color/colorAccent"
-            android:typeface="serif"
-            android:lineSpacingExtra="18sp"
-            android:fontFamily="serif"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@+id/infoDesc"/>
-
-    <GridView
-            android:layout_width="wrap_content"
-            android:id="@+id/char_serie_gridview"
-            android:columnWidth="100dp"
-            android:numColumns="2"
-            android:verticalSpacing="5dp"
-            android:horizontalSpacing="-10dp"
-            android:stretchMode="columnWidth"
-            android:gravity="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            android:layout_marginTop="32dp"
-            android:maxWidth="500dp"
-            android:layout_height="450dp"
-            android:maxHeight="500dp"/>
-
-    <TextView
-            android:text="No description found for this @string/character"
-            android:layout_width="394dp"
-            android:layout_height="80dp"
-            android:id="@+id/infoDesc"
-            android:textAlignment="center"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="32dp"
-            app:layout_constraintTop_toBottomOf="@+id/infoName"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"
-            android:textSize="12sp"/>
-
-</android.support.constraint.ConstraintLayout>
 </ScrollView>
