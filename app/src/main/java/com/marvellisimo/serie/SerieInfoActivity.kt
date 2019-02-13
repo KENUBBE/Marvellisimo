@@ -107,7 +107,6 @@ class SerieInfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeLis
                         res.data.results[0].series,
                         res.data.results[0].thumbnail
                     )
-                    println("CHARACTER FROM API $character")
                 },
                 { error -> println("Error: ${error.message}") }
             )

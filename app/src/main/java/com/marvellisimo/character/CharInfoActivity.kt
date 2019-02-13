@@ -135,7 +135,6 @@ class CharInfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeList
                         res.data.results[0].startYear,
                         res.data.results[0].thumbnail
                     )
-                    println("SERIE FROM API $serie")
                 },
                 { error -> println("Error: ${error.message}") }
             )

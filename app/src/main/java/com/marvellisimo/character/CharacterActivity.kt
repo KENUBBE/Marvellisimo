@@ -31,7 +31,6 @@ class CharacterActivity : AppCompatActivity() {
     private val prefixApi: String = "characters?&nameStartsWith="
     private val suffixApi: String = "&ts=1&apikey=ca119f99531365ccb328f771ec231aa2&hash="
     private val hashKEY = HexBuilder().generateHashKey()
-    private val characters = arrayListOf<Character>()
     private var searchResults = arrayListOf<Character>()
     private val popularCharacters = arrayListOf<Character>()
 
@@ -68,7 +67,7 @@ class CharacterActivity : AppCompatActivity() {
     private fun isSearchFieldEmpty(userInput: Editable) {
         Handler().postDelayed({
             if (userInput.length < 3) {
-                renderCharacter(characters)
+                renderCharacter(popularCharacters)
             } else {
                 fetchCharacterByStartsWith(userInput)
             }
