@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         DrawerUtil.getDrawer(this, toolbar_main)
 
         val backgroundImageView: ImageView = findViewById(R.id.main_background)
+        backgroundImageView.setPadding(0, 150, 0,0)
         Picasso.get().load(R.drawable.marvel_main_background).fit().into(backgroundImageView)
 
 

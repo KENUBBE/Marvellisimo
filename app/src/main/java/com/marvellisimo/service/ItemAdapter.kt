@@ -1,6 +1,7 @@
 package com.marvellisimo.service
 
 import android.content.Context
+import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -21,7 +22,8 @@ class ItemAdapter(private val mContext: Context, private val items: ArrayList<It
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             textView = TextView(mContext)
-            textView.setPadding(2, 2, 2, 2)
+            textView.setPadding(2,2,2,2)
+            textView.maxLines = 2
         } else {
             textView = convertView as TextView
         }
