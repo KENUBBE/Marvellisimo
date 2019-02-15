@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#1C5F08</color>
     <color name="textColorWhite">#FFFFFF</color>
-    <color name="defaultTextViewColor">#F44336</color>
+    <color name="defaultTextViewColor">#FF1100</color>
     <color name="nav_color">#222222</color>
     <color name="nav_color_names">#5A5A5A</color>
 

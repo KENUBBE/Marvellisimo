@@ -4,16 +4,17 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.widget.Toolbar
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.marvellisimo.DrawerUtil
 import com.marvellisimo.R
 import com.marvellisimo.dto.character.Character
 import com.marvellisimo.repository.MarvelService
-import com.marvellisimo.service.CharacterImageAdapter
 import com.marvellisimo.service.HexBuilder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -23,21 +24,25 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import com.marvellisimo.service.CharacterAdapter
+import android.widget.Toast
 
 
-class CharacterActivity : AppCompatActivity() {
-    val db = FirebaseFirestore.getInstance()
+class CharacterActivity : AppCompatActivity(), CharacterAdapter.ItemClickListener {
     private val baseURL: String = "http://gateway.marvel.com/v1/public/"
-    private val prefixApi: String = "characters?&nameStartsWith="
+    private val apiKEY: String = "&apikey=ca119f99531365ccb328f771ec231aa2&hash="
+    private val prefixApiOffset: String = "characters?&ts=1&offset="
+    private val prefixApiSearch: String = "characters?&nameStartsWith="
     private val suffixApi: String = "&ts=1&apikey=ca119f99531365ccb328f771ec231aa2&hash="
     private val hashKEY = HexBuilder().generateHashKey()
     private var searchResults = arrayListOf<Character>()
-    private val popularCharacters = arrayListOf<Character>()
+    private val characters = arrayListOf<Character>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fetchPopularCharacters()
         setContentView(R.layout.activity_character)
+        goToTop()
+        fetchCharacter(characters.size)
         addTextWatcherOnSearchField()
         setSupportActionBar(toolbar_char)
         DrawerUtil.getDrawer(this, toolbar_char)
@@ -67,7 +72,7 @@ class CharacterActivity : AppCompatActivity() {
     private fun isSearchFieldEmpty(userInput: Editable) {
         Handler().postDelayed({
             if (userInput.length < 3) {
-                renderCharacter(popularCharacters)
+                renderCharacter(characters)
             } else {
                 fetchCharacterByStartsWith(userInput)
             }
@@ -84,21 +89,42 @@ class CharacterActivity : AppCompatActivity() {
             .create(MarvelService::class.java)
     }
 
-    private fun fetchPopularCharacters() {
-        db.collection("popularCharacters")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    val char = document.toObject(Character::class.java)
-                    popularCharacters.add(char)
-                }
-                renderCharacter(popularCharacters)
-            }
+    private fun fetchCharacter(offset: Int): Disposable {
+        return createMarvelService()
+            .getCharacterData(prefixApiOffset + offset + apiKEY + hashKEY)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { res -> createCharacter(res.data.results) },
+                { error -> println("Error: ${error.message}") }
+            )
+    }
+
+    private fun createCharacter(character: ArrayList<Character>) {
+        for (char in character) {
+            characters.add(char)
+        }
+        renderCharacter(characters)
+    }
+
+    fun loadNextResult(offset: Int): Disposable {
+        progressBarChar.bringToFront()
+        progressBarChar.visibility = View.VISIBLE
+        return createMarvelService()
+            .getCharacterData(prefixApiOffset + offset + apiKEY + hashKEY)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                { res ->
+                    println("LOADING 20 MORE CHARACTERS"); createCharacter(res.data.results)
+                },
+                { error -> println("Error: ${error.message}") }
+            )
     }
 
     private fun fetchCharacterByStartsWith(userInput: Editable): Disposable {
         return createMarvelService()
-            .getCharacterByStartWith(prefixApi + userInput + suffixApi + hashKEY)
+            .getCharacterByStartWith(prefixApiSearch + userInput + suffixApi + hashKEY)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -120,17 +146,31 @@ class CharacterActivity : AppCompatActivity() {
 
 
     private fun renderCharacter(characters: ArrayList<Character>) {
-        val gridView: GridView = findViewById(R.id.char_gridview)
-        gridView.adapter = CharacterImageAdapter(this, characters)
+        val adapter = CharacterAdapter(this, characters)
+        val recyclerView: RecyclerView = findViewById(R.id.char_recyclerview)
+        val numberOfColumns = 2
+        val gridLayoutManager = GridLayoutManager(this, numberOfColumns)
 
-        gridView.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, v, position, id ->
-                val intent = Intent(this, CharInfoActivity::class.java).apply {
-                    action = Intent.ACTION_SEND
-                    putExtra("char", characters[position])
-                }
-                startActivity(intent)
-            }
+        recyclerView.layoutManager = gridLayoutManager
+        adapter.setClickListener(this)
+        recyclerView.adapter = adapter
+        recyclerView.scrollToPosition(characters.size - 20) // put next 20 characters on screen
+        progressBarChar.visibility = View.GONE
+    }
+
+    override fun onItemClick(view: View, position: Int) {
+        val intent = Intent(this, CharInfoActivity::class.java).apply {
+            action = Intent.ACTION_SEND
+            putExtra("char", characters[position])
+        }
+        startActivity(intent)
+    }
+
+    private fun goToTop() {
+        val recyclerView: RecyclerView = findViewById(R.id.char_recyclerview)
+        goTopChar_btn.setOnClickListener {
+            recyclerView.smoothScrollToPosition(0)
+        }
     }
 
     private fun getOkHttpClient(): OkHttpClient {
@@ -138,3 +178,5 @@ class CharacterActivity : AppCompatActivity() {
         return builder.build()
     }
 }
+
+
