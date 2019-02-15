@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.marvellisimo">
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_PROFILE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -13,46 +17,55 @@
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
         <activity
+                android:name=".login.LoginActivity"
+                android:label="@string/title_activity_login">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
                 android:name=".favorite.FavSerieList"
-                android:launchMode="singleTop"
                 android:label="Favorite Series"
+                android:launchMode="singleTop"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
                 android:name=".favorite.FavCharList"
-                android:launchMode="singleTop"
                 android:label="Favorite Characters"
+                android:launchMode="singleTop"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
                 android:name=".favorite.FavoriteActivity"
-                android:launchMode="singleTop"
                 android:label="Favorites"
+                android:launchMode="singleTop"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
                 android:name=".serie.SerieInfoActivity"
-                android:launchMode="singleTop"
                 android:label="Info"
+                android:launchMode="singleTop"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
                 android:name=".character.CharInfoActivity"
-                android:launchMode="singleTop"
                 android:label="Info"
+                android:launchMode="singleTop"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
                 android:name=".serie.SerieActivity"
-                android:launchMode="singleTop"
                 android:label="Series"
+                android:launchMode="singleTop"
                 android:theme="@style/AppTheme.NoActionBar"
                 android:windowSoftInputMode="adjustNothing">
         </activity>
         <activity
                 android:name=".character.CharacterActivity"
-                android:launchMode="singleTop"
                 android:label="Characters"
+                android:launchMode="singleTop"
                 android:theme="@style/AppTheme.NoActionBar"
                 android:windowSoftInputMode="adjustNothing">
         </activity>
@@ -60,11 +73,7 @@
                 android:name=".MainActivity"
                 android:label="Home"
                 android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
     </application>
 
