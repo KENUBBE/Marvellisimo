@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "247009082342-jouvb6kquitutg3am5vmql457353va71.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.marvellisimo",
+            "certificate_hash": "aa51cdea637769ff89236d9e2db0b39d8ffd0cd2"
+          }
+        },
+        {
           "client_id": "247009082342-37u3o7tr931govj6c94sh1bbhcfvtn81.apps.googleusercontent.com",
           "client_type": 3
         }
