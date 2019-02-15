@@ -5,9 +5,10 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.marvellisimo.DrawerUtil
 import com.marvellisimo.R
+import kotlinx.android.synthetic.main.activity_online_user_list.*
 
 class OnlineUserList : AppCompatActivity() {
 
@@ -18,6 +19,8 @@ class OnlineUserList : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_online_user_list)
+        setSupportActionBar(toolbar_onlineUsers)
+        DrawerUtil.getDrawer(this, toolbar_onlineUsers)
         db = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
         getOnlineUsers()
@@ -26,6 +29,7 @@ class OnlineUserList : AppCompatActivity() {
     private fun renderUsers(onlineUsers: ArrayList<String>) {
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, onlineUsers)
         val listView: ListView = findViewById(R.id.usersList)
+        adapter.notifyDataSetChanged()
         listView.adapter = adapter
     }
 
@@ -34,12 +38,21 @@ class OnlineUserList : AppCompatActivity() {
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    if (document.get("status") == "online") {
-                        onlineUsers.add(document.get("email").toString())
-                        println(onlineUsers)
-                    }
+                    addListener(document.data.getValue("id").toString())
                 }
-                renderUsers(onlineUsers)
+            }
+    }
+
+    private fun addListener(documentId: String) {
+        db.collection("users").document(documentId)
+            .addSnapshotListener { snapshot, _ ->
+                if (snapshot?.get("status") == "online") {
+                    onlineUsers.add(snapshot.data?.getValue("email").toString())
+                    renderUsers(onlineUsers)
+                } else {
+                    onlineUsers.remove(snapshot?.data?.getValue("email"))
+                    renderUsers(onlineUsers)
+                }
             }
     }
 }

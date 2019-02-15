@@ -16,7 +16,10 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             android:usesCleartextTraffic="true">
-        <activity android:name=".user.OnlineUserList">
+        <activity android:name=".user.OnlineUserList"
+                  android:launchMode="singleTop"
+                  android:label="Online users"
+                  android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
                 android:name=".login.LoginActivity"
