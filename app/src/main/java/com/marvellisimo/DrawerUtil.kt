@@ -14,14 +14,18 @@ import com.marvellisimo.character.CharacterActivity
 import com.marvellisimo.favorite.FavoriteActivity
 import com.marvellisimo.login.LoginActivity
 import com.marvellisimo.serie.SerieActivity
+import com.marvellisimo.user.OnlineUserList
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
 
 object DrawerUtil {
+    val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
+
     fun getDrawer(activity: Activity, toolbar: Toolbar) {
 
         val names = PrimaryDrawerItem().withIdentifier(0)
-            .withName("Tobias Ask, John Gherga").withTextColorRes(R.color.nav_color_names)
+            .withName(auth.currentUser?.email).withTextColorRes(R.color.nav_color_names)
             .withSelectable(false)
 
         val homeNav = PrimaryDrawerItem().withIdentifier(1)
@@ -36,7 +40,10 @@ object DrawerUtil {
         val favoritesNav = PrimaryDrawerItem().withIdentifier(4)
             .withName(R.string.nav_favorites).withIcon(R.drawable.ic_stars_black_24dp).withTextColorRes(R.color.textColorWhite)
 
-        val signOut = PrimaryDrawerItem().withIdentifier(5)
+        val usersOnline = PrimaryDrawerItem().withIdentifier(5)
+            .withName("Users").withIcon(R.drawable.ic_users_24dp).withTextColorRes(R.color.textColorWhite)
+
+        val signOut = PrimaryDrawerItem().withIdentifier(6)
             .withName("Sign out").withIcon(R.drawable.ic_sign_out_24dp).withTextColorRes(R.color.textColorWhite)
 
         val drawerHeader = AccountHeaderBuilder()
@@ -60,6 +67,7 @@ object DrawerUtil {
                 charactersNav,
                 seriesNav,
                 favoritesNav,
+                usersOnline,
                 signOut
             )
             .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
@@ -81,7 +89,10 @@ object DrawerUtil {
                         view.context.startActivity(intent)
                     }
                     if (drawerItem.identifier == 5L) {
-                        val auth: FirebaseAuth = FirebaseAuth.getInstance()
+                        val intent = Intent(activity, OnlineUserList::class.java)
+                        view.context.startActivity(intent)
+                    }
+                    if (drawerItem.identifier == 6L) {
                         val db = FirebaseFirestore.getInstance()
                         val userRef = db.collection("users").document(auth.currentUser?.uid.toString())
                         auth.signOut()
