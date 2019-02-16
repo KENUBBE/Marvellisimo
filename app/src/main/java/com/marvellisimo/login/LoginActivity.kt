@@ -43,7 +43,7 @@ class LoginActivity : Activity(), View.OnClickListener {
     public override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
-        updateUI(currentUser)
+        isUserLoggedIn(currentUser)
     }
 
     private fun createAccount(email: String, password: String) {
@@ -59,7 +59,6 @@ class LoginActivity : Activity(), View.OnClickListener {
                 if (task.isSuccessful) {
                     Log.d(TAG, "createUserWithEmail:success")
                     val user = auth.currentUser
-                    addUserToDb(user)
                     sendEmailVerification()
                 } else {
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
@@ -105,7 +104,7 @@ class LoginActivity : Activity(), View.OnClickListener {
                 if (task.isSuccessful) {
                     Log.d(TAG, "signInWithEmail:success")
                     val user = auth.currentUser
-                    updateUI(user)
+                    isUserLoggedIn(user)
                     setUserStatus(user)
                 } else {
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
@@ -158,12 +157,17 @@ class LoginActivity : Activity(), View.OnClickListener {
         return valid
     }
 
-    private fun updateUI(user: FirebaseUser?) {
-        hideProgressDialog()
+    private fun isUserLoggedIn(user: FirebaseUser?) {
         if (user != null && user.isEmailVerified) {
+            addUserToDb(user)
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-        } else if (user == null){
+        }
+    }
+
+    private fun updateUI(user: FirebaseUser?) {
+        hideProgressDialog()
+        if (user == null){
             Toast.makeText(baseContext,
                 "Wrong password or email ",
                 Toast.LENGTH_SHORT).show()
