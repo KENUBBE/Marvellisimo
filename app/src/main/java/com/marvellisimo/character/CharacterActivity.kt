@@ -1,6 +1,7 @@
 package com.marvellisimo.character
 
 import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -10,7 +11,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.*
-import com.google.firebase.firestore.FirebaseFirestore
 import com.marvellisimo.DrawerUtil
 import com.marvellisimo.R
 import com.marvellisimo.dto.character.Character
@@ -27,7 +27,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import com.marvellisimo.service.CharacterAdapter
 import android.widget.Toast
 
-
 class CharacterActivity : AppCompatActivity(), CharacterAdapter.ItemClickListener {
     private val baseURL: String = "http://gateway.marvel.com/v1/public/"
     private val apiKEY: String = "&apikey=ca119f99531365ccb328f771ec231aa2&hash="
@@ -41,7 +40,7 @@ class CharacterActivity : AppCompatActivity(), CharacterAdapter.ItemClickListene
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character)
-        goToTop()
+        goBackToTop()
         fetchCharacter(characters.size)
         addTextWatcherOnSearchField()
         setSupportActionBar(toolbar_char)
@@ -166,7 +165,7 @@ class CharacterActivity : AppCompatActivity(), CharacterAdapter.ItemClickListene
         startActivity(intent)
     }
 
-    private fun goToTop() {
+    private fun goBackToTop() {
         val recyclerView: RecyclerView = findViewById(R.id.char_recyclerview)
         goTopChar_btn.setOnClickListener {
             recyclerView.smoothScrollToPosition(0)

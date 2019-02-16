@@ -9,7 +9,6 @@
 
 
     <android.support.constraint.ConstraintLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -79,6 +78,8 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginBottom="8dp"
+                android:scaleX="1.2"
+                android:scaleY="1.2"
                 app:layout_constraintBottom_toBottomOf="@+id/infoThumbnail"
                 app:layout_constraintStart_toEndOf="@+id/infoThumbnail"
                 android:layout_marginStart="8dp"
@@ -114,12 +115,16 @@
                 android:horizontalSpacing="20dp"
                 app:layout_constraintTop_toBottomOf="@+id/textView2"
                 android:layout_marginTop="32dp"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:numColumns="2"
-                android:stretchMode="columnWidth"/>
+                android:stretchMode="columnWidth"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
                 android:text="No description found for this @string/character"
@@ -143,6 +148,16 @@
                 app:layout_constraintBottom_toTopOf="@+id/textView2"
                 android:textSize="12sp"
                 app:layout_constraintVertical_chainStyle="spread_inside"/>
+
+        <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:id="@+id/wikiButton"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/appBarLayout6"
+                android:visibility="invisible"/>
 
     </android.support.constraint.ConstraintLayout>
 

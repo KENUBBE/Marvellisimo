@@ -105,6 +105,7 @@ class SerieInfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeLis
                         res.data.results[0].name,
                         res.data.results[0].description,
                         res.data.results[0].series,
+                        res.data.results[0].urls,
                         res.data.results[0].thumbnail
                     )
                 },
