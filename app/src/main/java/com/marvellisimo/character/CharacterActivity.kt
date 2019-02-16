@@ -145,8 +145,8 @@ class CharacterActivity : AppCompatActivity(), CharacterAdapter.ItemClickListene
 
 
     private fun renderCharacter(characters: ArrayList<Character>) {
-        val adapter = CharacterAdapter(this, characters)
         val recyclerView: RecyclerView = findViewById(R.id.char_recyclerview)
+        val adapter = CharacterAdapter(this, characters)
         val numberOfColumns = 2
         val gridLayoutManager = GridLayoutManager(this, numberOfColumns)
 
@@ -155,12 +155,17 @@ class CharacterActivity : AppCompatActivity(), CharacterAdapter.ItemClickListene
         recyclerView.adapter = adapter
         recyclerView.scrollToPosition(characters.size - 20) // put next 20 characters on screen
         progressBarChar.visibility = View.GONE
+
     }
 
     override fun onItemClick(view: View, position: Int) {
         val intent = Intent(this, CharInfoActivity::class.java).apply {
             action = Intent.ACTION_SEND
-            putExtra("char", characters[position])
+            if (character_searchField.text.length > 3) {
+                putExtra("char", searchResults[position])
+            } else {
+                putExtra("char", characters[position])
+            }
         }
         startActivity(intent)
     }
