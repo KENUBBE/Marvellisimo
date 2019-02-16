@@ -10,5 +10,6 @@ data class Character(
     val name: String = "",
     val description: String? = "",
     val series: CharacterSerie = CharacterSerie(arrayListOf(Item("", ""))),
+    val urls: ArrayList<Url> = arrayListOf(Url("","")),
     val thumbnail: Thumbnail = Thumbnail("", "")
 ) : Parcelable

@@ -1,9 +1,11 @@
 package com.marvellisimo.character
 
 import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.widget.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.marvellisimo.DrawerUtil
@@ -19,7 +21,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_char_info.*
-import kotlinx.android.synthetic.main.activity_serie.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -30,6 +31,7 @@ class CharInfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeList
     lateinit var character: Character
     lateinit var db: FirebaseFirestore
     lateinit var fav: CheckBox
+    lateinit var wikiUrl: String
     private var serie: Serie = Serie()
 
     private val baseURL: String = "http://gateway.marvel.com/v1/public/series/"
@@ -53,6 +55,7 @@ class CharInfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeList
 
         Picasso.get().load(character.thumbnail.createUrl()).fit().centerCrop().into(infoThumbnail)
         isCharacterInDB()
+        renderWikiButton()
         renderSerie()
 
         setSupportActionBar(toolbar_charInfo)
@@ -76,6 +79,31 @@ class CharInfoActivity : AppCompatActivity(), CompoundButton.OnCheckedChangeList
                     startActivity(intent)
                 }, 1500)
             }
+    }
+
+    private fun hasWikiPage(): Boolean {
+        for (value in character.urls) {
+            if (value.type == "wiki") {
+                wikiUrl = value.url
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun renderWikiButton() {
+        if (hasWikiPage()) {
+            wikiButton.visibility = Button.VISIBLE
+            Picasso.get().load(R.drawable.wiki_button).centerCrop().fit().into(wikiButton)
+            goToWiki()
+        }
+    }
+
+    private fun goToWiki() {
+        wikiButton.setOnClickListener {
+            val wikiView = Intent(Intent.ACTION_VIEW, Uri.parse(wikiUrl))
+            startActivity(wikiView)
+        }
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
