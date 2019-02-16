@@ -167,7 +167,11 @@ class SerieActivity : AppCompatActivity(), SerieAdapter.ItemClickListener {
     override fun onItemClick(view: View, position: Int) {
         val intent = Intent(this, SerieInfoActivity::class.java).apply {
             action = Intent.ACTION_SEND
-            putExtra("serie", series[position])
+            if (serie_searchField.text.length > 3) {
+                putExtra("serie", searchResults[position])
+            } else {
+                putExtra("serie", series[position])
+            }
         }
         startActivity(intent)
     }
