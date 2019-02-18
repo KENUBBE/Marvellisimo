@@ -1,7 +1,6 @@
 package com.marvellisimo.character
 
 import android.content.Intent
-import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -36,12 +35,13 @@ class CharacterActivity : AppCompatActivity(), CharacterAdapter.ItemClickListene
     private val hashKEY = HexBuilder().generateHashKey()
     private var searchResults = arrayListOf<Character>()
     private val characters = arrayListOf<Character>()
+    private var searchString: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character)
-        goBackToTop()
         fetchCharacter(characters.size)
+        goBackToTop()
         addTextWatcherOnSearchField()
         setSupportActionBar(toolbar_char)
         DrawerUtil.getDrawer(this, toolbar_char)
@@ -62,6 +62,7 @@ class CharacterActivity : AppCompatActivity(), CharacterAdapter.ItemClickListene
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
 
             override fun afterTextChanged(editable: Editable) {
+                searchString = editable.toString()
                 isSearchFieldEmpty(editable)
             }
         }
@@ -70,10 +71,11 @@ class CharacterActivity : AppCompatActivity(), CharacterAdapter.ItemClickListene
 
     private fun isSearchFieldEmpty(userInput: Editable) {
         Handler().postDelayed({
-            if (userInput.length < 3) {
+            if (userInput.length <= 3) {
+                searchResults.clear()
                 renderCharacter(characters)
             } else {
-                fetchCharacterByStartsWith(userInput)
+                fetchCharacterByStartsWith(userInput.toString(), searchResults.size)
             }
         }, 700)
     }
@@ -91,6 +93,7 @@ class CharacterActivity : AppCompatActivity(), CharacterAdapter.ItemClickListene
     private fun fetchCharacter(offset: Int): Disposable {
         return createMarvelService()
             .getCharacterData(prefixApiOffset + offset + apiKEY + hashKEY)
+            .retry(10)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -106,30 +109,32 @@ class CharacterActivity : AppCompatActivity(), CharacterAdapter.ItemClickListene
         renderCharacter(characters)
     }
 
-    fun loadNextResult(offset: Int): Disposable {
+    fun loadNextResult() {
         progressBarChar.bringToFront()
         progressBarChar.visibility = View.VISIBLE
-        return createMarvelService()
-            .getCharacterData(prefixApiOffset + offset + apiKEY + hashKEY)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { res ->
-                    println("LOADING 20 MORE CHARACTERS"); createCharacter(res.data.results)
-                },
-                { error -> println("Error: ${error.message}") }
-            )
+
+        if (searchString.length <= 3) {
+            fetchCharacter(characters.size)
+        } else {
+            fetchCharacterByStartsWith(searchString, searchResults.size)
+        }
     }
 
-    private fun fetchCharacterByStartsWith(userInput: Editable): Disposable {
+    private fun fetchCharacterByStartsWith(userInput: String, offset: Int): Disposable {
         return createMarvelService()
-            .getCharacterByStartWith(prefixApiSearch + userInput + suffixApi + hashKEY)
+            .getCharacterByStartWith("$prefixApiSearch$userInput&offset=$offset$suffixApi$hashKEY")
+            .retry(10)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { res ->
-                    searchResults.clear()
-                    createSearchResult(res.data.results)
+                    if(res.data.results.isNotEmpty()) {
+                        searchResults.clear()
+                        createSearchResult(res.data.results)
+                    } else {
+                        progressBarChar.visibility = View.GONE
+                        Toast.makeText(this, "No more results", Toast.LENGTH_LONG).show()
+                    }
                 },
                 { error -> println("Error: ${error.message}") }
             )
@@ -155,7 +160,6 @@ class CharacterActivity : AppCompatActivity(), CharacterAdapter.ItemClickListene
         recyclerView.adapter = adapter
         recyclerView.scrollToPosition(characters.size - 20) // put next 20 characters on screen
         progressBarChar.visibility = View.GONE
-
     }
 
     override fun onItemClick(view: View, position: Int) {

@@ -30,7 +30,7 @@ class CharacterAdapter(context: Context, private val characters: ArrayList<Chara
     // binds the data to the TextView in each cell
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (position == characters.size - 1) {
-            (mContext as CharacterActivity).loadNextResult(characters.size)
+            (mContext as CharacterActivity).loadNextResult()
         }
 
         holder.myTextView.scaleType = ImageView.ScaleType.CENTER_CROP
