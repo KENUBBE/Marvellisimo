@@ -44,11 +44,14 @@ class SerieActivity : AppCompatActivity(), SerieAdapter.ItemClickListener {
     private val hashKEY = HexBuilder().generateHashKey()
     private val series = arrayListOf<Serie>()
     private var searchResults = arrayListOf<Serie>()
+    private var searchString: String = ""
+    private val tempList = arrayListOf<Serie>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_serie)
-        fetchSerie(series.size)
+        // fetchSerie(series.size)
+        loadNextResult()
         goToTop()
         addTextWatcherOnSearchField()
         setSupportActionBar(toolbar_serie)
@@ -71,7 +74,9 @@ class SerieActivity : AppCompatActivity(), SerieAdapter.ItemClickListener {
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
 
             override fun afterTextChanged(editable: Editable) {
-                isSearchFieldEmpty(editable)
+                searchString = editable.toString()
+                //isSearchFieldEmpty(editable)
+                loadNextResult()
             }
         }
         sf.addTextChangedListener(text)
@@ -79,12 +84,13 @@ class SerieActivity : AppCompatActivity(), SerieAdapter.ItemClickListener {
 
     private fun isSearchFieldEmpty(userInput: Editable) {
         Handler().postDelayed({
-            if (userInput.length < 3) {
+            if (userInput.length <= 3) {
+                searchResults.clear()
                 renderSerie(series)
             } else {
-                fetchSerieByStartsWith(userInput)
+                fetchSerieByStartsWith(userInput.toString(), searchResults.size)
             }
-        }, 700)
+        }, 2000)
     }
 
     private fun createMarvelService(): MarvelService {
@@ -100,6 +106,7 @@ class SerieActivity : AppCompatActivity(), SerieAdapter.ItemClickListener {
     private fun fetchSerie(offset: Int): Disposable {
         return createMarvelService()
             .getSerieData(prefixApiOffset + offset + apiKEY + hashKEY)
+            .retry(10)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
@@ -108,21 +115,32 @@ class SerieActivity : AppCompatActivity(), SerieAdapter.ItemClickListener {
             )
     }
 
-    private fun fetchSerieByStartsWith(userInput: Editable): Disposable {
+    private fun fetchSerieByStartsWith(userInput: String, offset: Int): Disposable {
+        println("OFFSET ASDADSDDASADSDASDAS $offset")
         return createMarvelService()
-            .getSerieByStartWith(prefixApiSearch + userInput + suffixApi + hashKEY)
+            .getSerieByStartWith("$prefixApiSearch$userInput&offset=$offset$suffixApi$hashKEY")
+            .retry(10)
             .subscribeOn(Schedulers.single())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                { res -> createSearchResult(res.data.results) },
+                { res ->
+                    if (res.data.results.isNotEmpty()) {
+                        // searchResults.clear()
+                        createSearchResult(res.data.results)
+                    } else {
+                        progressBarSerie.visibility = View.GONE
+                        Toast.makeText(this, "No more results", Toast.LENGTH_LONG).show()
+                    }
+                },
                 { error -> println("Error: ${error.message}") }
             )
     }
 
     private fun createSearchResult(result: ArrayList<Serie>) {
-        searchResults.clear()
+        // searchResults.clear()
         for (res in result) {
             searchResults.add(res)
+            tempList.add(res)
         }
         renderSerie(searchResults)
         Toast.makeText(this, "Found ${searchResults.size} serie(s)", Toast.LENGTH_LONG).show()
@@ -135,10 +153,18 @@ class SerieActivity : AppCompatActivity(), SerieAdapter.ItemClickListener {
         renderSerie(series)
     }
 
-    fun loadNextResult(offset: Int): Disposable {
+    fun loadNextResult() {
         progressBarSerie.bringToFront()
         progressBarSerie.visibility = View.VISIBLE
-        return createMarvelService()
+        println("HEJ")
+        if (searchString.length <= 3) {
+            searchResults.clear()
+            fetchSerie(series.size)
+        } else {
+            series.clear()
+            fetchSerieByStartsWith(searchString, searchResults.size)
+        }
+        /*return createMarvelService()
             .getSerieData(prefixApiOffset + offset + apiKEY + hashKEY)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -148,7 +174,7 @@ class SerieActivity : AppCompatActivity(), SerieAdapter.ItemClickListener {
                     createSerie(res.data.results)
                 },
                 { error -> println("Error: ${error.message}") }
-            )
+            )*/
     }
 
     private fun renderSerie(series: ArrayList<Serie>) {
@@ -157,6 +183,7 @@ class SerieActivity : AppCompatActivity(), SerieAdapter.ItemClickListener {
         val numberOfColumns = 2
         val gridLayoutManager = GridLayoutManager(this, numberOfColumns)
 
+        adapter.notifyDataSetChanged()
         recyclerView.layoutManager = gridLayoutManager
         adapter.setClickListener(this)
         recyclerView.adapter = adapter

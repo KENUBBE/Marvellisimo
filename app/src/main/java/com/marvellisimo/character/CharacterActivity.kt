@@ -40,7 +40,8 @@ class CharacterActivity : AppCompatActivity(), CharacterAdapter.ItemClickListene
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character)
-        fetchCharacter(characters.size)
+        // fetchCharacter(characters.size)
+        loadNextResult()
         goBackToTop()
         addTextWatcherOnSearchField()
         setSupportActionBar(toolbar_char)
@@ -63,7 +64,8 @@ class CharacterActivity : AppCompatActivity(), CharacterAdapter.ItemClickListene
 
             override fun afterTextChanged(editable: Editable) {
                 searchString = editable.toString()
-                isSearchFieldEmpty(editable)
+                // isSearchFieldEmpty(editable)
+                loadNextResult()
             }
         }
         sf.addTextChangedListener(text)
@@ -114,8 +116,10 @@ class CharacterActivity : AppCompatActivity(), CharacterAdapter.ItemClickListene
         progressBarChar.visibility = View.VISIBLE
 
         if (searchString.length <= 3) {
+            searchResults.clear()
             fetchCharacter(characters.size)
         } else {
+            characters.clear()
             fetchCharacterByStartsWith(searchString, searchResults.size)
         }
     }

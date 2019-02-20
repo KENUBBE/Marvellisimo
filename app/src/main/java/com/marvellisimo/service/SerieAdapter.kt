@@ -19,6 +19,8 @@ class SerieAdapter(context: Context, private val series: ArrayList<Serie>) : Rec
     private var mClickListener: ItemClickListener? = null
     private val mContext = context
 
+
+
     // inflates the cell layout from xml when needed
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = mInflater.inflate(R.layout.recyclerview_item, parent, false)
@@ -29,7 +31,8 @@ class SerieAdapter(context: Context, private val series: ArrayList<Serie>) : Rec
     // binds the data to the TextView in each cell
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         if (position == series.size - 1) {
-            (mContext as SerieActivity).loadNextResult(series.size)
+            println("DÅ")
+            (mContext as SerieActivity).loadNextResult()
         }
 
         holder.myTextView.scaleType = ImageView.ScaleType.CENTER_CROP
